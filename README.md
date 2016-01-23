@@ -1,0 +1,2 @@
+# algorithmics
+algorithmics class projects
