@@ -1,0 +1,113 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{cite}
+\begin{document}
+\lstset{language=python}
+\title{CS 516 homework 1}
+\author{Yuchen Hou}
+\maketitle
+
+\section{closure property: shuffle}
+
+\subsection{}
+
+\begin{align*}
+	L_1 \in Reg \implies \exists FA \ M_1 \ accepting \ L_1\\
+	L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2\\
+\end{align*}
+We can construct a FA $ M_3 $ accepting $ L_1 \mid \mid  L_2 $ as follows:
+\begin{enumerate}
+	\item run $ M_1, M_2 $ in parallel;
+	\item read input w; for every symbol $\gamma $ in w, guess whether $\gamma$ is a symbol in $ w_1 $ or $ w_2 $;
+	\begin{enumerate}
+		\item if $ \gamma \ in \ w_1 $, feed $ \gamma $ to $ M_1 $;
+		\item otherwise, feed $ \gamma $ to $ M_2 $;
+	\end{enumerate}
+	\item after reading w, check $ M_1 $ and $ M_2 $;
+	\begin{enumerate}
+		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
+		\item otherwise, reject w;	
+	\end{enumerate}
+\end{enumerate}
+FA $ M_3 $ accepts $L_1 \mid \mid  L_2 \implies L_1 \mid \mid  L_2 \in Reg$.
+
+\subsection{}
+
+\begin{align*}
+L_1 \in Reg \implies \exists FA \ M_1 \ accepting \ L_1\\
+L_2 \in CFL \implies \exists PDA \ M_2 \ accepting \ L_2\\
+\end{align*}
+We can construct a PDA $ M_3 $ accepting $ L_1 \mid \mid  L_2 $ as follows:
+\begin{enumerate}
+	\item run $ M_1, M_2 $ in parallel;
+	\item read input w; for every symbol $\gamma $ in w, guess whether $\gamma$ is a symbol in $ w_1 $ or $ w_2 $;
+	\begin{enumerate}
+		\item if $ \gamma \ in \ w_1 $, feed $ \gamma $ to $ M_1 $;
+		\item otherwise, feed $ \gamma $ to $ M_2 $;
+	\end{enumerate}
+	\item after reading w, check $ M_1 $ and $ M_2 $;
+	\begin{enumerate}
+		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
+		\item otherwise, reject w;	
+	\end{enumerate}
+\end{enumerate}
+PDA $ M_3 $ accepts $L_1 \mid \mid  L_2 \implies L_1 \mid \mid  L_2 \in Reg$.
+
+\section{closure property: function}
+
+\subsection{}
+
+$ L \in Reg \implies \exists FA \ M \ accepting \ L $, we can construct a FA M' accepting h(L) as follows:
+\begin{enumerate}
+	\item run M;
+	\item read input h(w); for every symbol h(a) in h(w), guess the value of a and feed a to M
+	\item after reading h(w), check M
+	\begin{enumerate}
+		\item if M is in accepting state, accept h(w);
+		\item otherwise, reject h(w);
+	\end{enumerate}
+\end{enumerate}
+FA M' accepts h(L) $ \implies h(L) \ \in \ Reg $.
+
+\subsection{}
+
+Assume $ \Sigma = \{0, 1\} $ without loss of generality.\\
+$ \exists L = \{0^n1^n: n>1\} \notin Reg $, and function $ h(a) = 0 \forall a \in \Sigma $ such that $ h(L) = \{0^{2n}: n>1\} \in Reg $.
+
+\section{closure property: match}
+
+\begin{align*}
+L_1 \in Reg \implies \exists FA \ M_1 \ accepting \ L_1\\
+L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2\\
+\end{align*}
+We can construct a FA $ M_3 $ accepting $ L_1 \heartsuit L_2 $ as follows:
+\begin{enumerate}
+	\item run $ M_1, M_2 $ in parallel;
+	\item for every symbol $ \gamma \ in \ w_1' $(guess), feed $ \gamma $ to $ M_1 $
+	\item for every symbol $ \gamma \ in \ w $, feed $ \gamma $ to $ M_1 \ and \ M_2 $;
+	\item for every symbol $ \gamma \ in \ w_2' $(guess), feed $ \gamma $ to $ M_2 $
+	\item check $ M_1 $ and $ M_2 $;
+	\begin{enumerate}
+		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
+		\item otherwise, reject w;	
+	\end{enumerate}
+\end{enumerate}
+FA $ M_3 $ accepts $ L_1 \heartsuit L_2 \implies L_1 \heartsuit L_2 \in Reg$.
+
+\section{B-bounded PDA}
+
+Proof by contradiction with assumption: $ \exists B = b $ such that B-bounded PDA M accepts $ L = \{0^n1^n: n \geq 1\} $. Pick $ w = 0^b1^b \in L $ and run M on w. From the definition of M, upon reading the last 0, the stack hight will reach b and M will crash and reject w. But from the assumption M should accept w. This is a contradiction. Therefore L can't be accepted by a B-bounded PDA for any B.
+
+\section{Halting problem for PDA}
+
+\section{Loops}
+
+\section{FA with a timer}
+
+To be simple, the FA can make 1 transition in every time unit.
+
+\end{document}
