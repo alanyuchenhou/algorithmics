@@ -1,0 +1,139 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{cite}
+\begin{document}
+\lstset{language=python, tabsize=4}
+\title{CS 516 homework 2}
+\author{Yuchen Hou}
+\maketitle
+
+\section{TM: change}
+
+\subsection{10-change TM}
+
+The smallest class is Regular, because 10-change TMs can accept Regular Languages, but not CFL. The proof consists of 2 parts:
+
+\subsubsection{10-change TMs accept Regular Languages}
+
+$ L \in Regular \implies \exists FA \ M_1 $ accepting L. Therefore, we can construct a 10-change TM M to accept L:
+\begin{lstlisting}
+def M(w):
+	run M_1
+	for \gamma in w:
+		feed \gamma to M_1
+	if M_1 returns yes:
+		return yes
+\end{lstlisting}
+
+\subsubsection{10-change TMs can't accept CFL}
+
+$ \exists L = \{0^n1^n: n > 0\} \in CFL $ such that no 10-change TM can accept L. This is because every 10-change TM doesn't have infinite memory, which is necessary to count the numbers of 0 and 1 to accept L.
+
+\subsection{10-change-per-cell TM}
+
+$ \forall TM M_1 $, we can construct a 10-change-per-cell TM M to simulate $ M_1 $:
+\begin{lstlisting}
+def M(w):
+	run M_1 on w:
+		every time M_1 changes a symbol, move the head and symbols in the
+		non-blank region to the blank region on the right
+	if M_1 returns yes:
+		return yes
+\end{lstlisting}
+Notice that M changes a cell at most twice.
+
+\section{1-turn TM}
+
+PDA and 1-turn TM are equivalent, so the smallest language is CFL. The proof consists of 2 parts.
+
+\subsection{Simulating 1-turn TM with PDA}
+$ \forall $ 1-turn TM M, we can construct PDA M' to simulate M by converting each TM transition into a PDA transition as follows:
+\begin{align*}
+\gamma_1, \gamma_2, \gamma_3 &\in \Gamma\\
+\delta(q_1, \gamma_1) = (q_2, \gamma_2, L) &\to
+\delta(q_1, \Lambda, \gamma_1) = (q_2, \Lambda)\\
+\delta(q_1, \gamma_1) = (q_2, \gamma_2, R) &\to
+\delta(q_1, \gamma_1, \gamma_3) = (q_2, \gamma_2 \gamma_3)\\
+\delta(q_1, \gamma_1) = (q_2, \gamma_2, S) &\to
+\delta(q_1, \Lambda, \gamma_1) = (q_2, \gamma_2)
+\end{align*}
+
+\subsection{Simulating PDA with 1-turn TM}
+$ \forall $ PDA M, we can construct TM M' to simulate M by converting each PDA transition into a TM transition as follows:
+
+\section{Jump TM}
+
+$ \forall$ TM N, we can construct a jump TM M to simulate N:
+\begin{lstlisting}
+def M(w):
+	run on w like N:
+		if N would move left to cell C:
+			jump to the left end
+			move right a few times
+			stop at C(guess when to stop)
+		else:
+			run exactly like N
+\end{lstlisting}
+
+\section{Simulating 2 counters with 1 queue}
+The queue simulates 2 counters: A and B. The queue alphabet = \{A, B, 1\}.
+\begin{lstlisting}
+
+def __init__():
+	"""
+	initialize 2 counters: A = 0, B = 0
+	"""
+	queue.enqueue(A)
+	queue.enqueue(B)
+	
+def increment(X):
+	"""
+	increment counter X
+	
+	@param: X is the counter to be incremented, either A or B
+	"""
+	symbol = none
+	while (symbol != X):
+		symbol = queue.dequeue()
+		queue.enqueue(symbol)
+	queue.enqueue(1)
+
+def decrement(X):
+	"""
+	decrement counter X
+	
+	@param: X is the counter to be decremented, either A or B
+	@crash: if X == 0
+	"""
+	symbol = none
+	while (symbol != X):
+		symbol = queue.dequeue()
+		queue.enqueue(symbol)
+	symbol = queue.dequeue()
+	assert(symbol == 1)
+	
+def is_zero(X):
+	"""
+	test if counter X == 0
+	
+	@param: X is the counter to be decremented, either A or B
+	@return: true if X == 0, false otherwise
+	"""
+	symbol = none
+	while (symbol != X):
+		symbol = queue.dequeue()
+		queue.enqueue(symbol)
+	symbol = queue.dequeue()	
+	queue.enqueue(symbol)
+	if symbol == 1:
+		return false
+	else:
+		return true
+	
+\end{lstlisting}	
+
+\end{document}
