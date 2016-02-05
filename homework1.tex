@@ -87,9 +87,9 @@ L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2\\
 We can construct a FA $ M_3 $ accepting $ L_1 \heartsuit L_2 $ as follows:
 \begin{enumerate}
 	\item run $ M_1, M_2 $ in parallel;
-	\item for every symbol $ \gamma \ in \ w_1' $(guess), feed $ \gamma $ to $ M_1 $
-	\item for every symbol $ \gamma \ in \ w $, feed $ \gamma $ to $ M_1 \ and \ M_2 $;
-	\item for every symbol $ \gamma \ in \ w_2' $(guess), feed $ \gamma $ to $ M_2 $
+	\item guess every symbol $ \gamma \ in \ w_1' $, feed $ \gamma $ to $ M_1 $
+	\item read every symbol $ \gamma \ in \ w $, feed $ \gamma $ to $ M_1 \ and \ M_2 $;
+	\item guess every symbol $ \gamma \ in \ w_2' $, feed $ \gamma $ to $ M_2 $
 	\item check $ M_1 $ and $ M_2 $;
 	\begin{enumerate}
 		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
@@ -100,14 +100,14 @@ FA $ M_3 $ accepts $ L_1 \heartsuit L_2 \implies L_1 \heartsuit L_2 \in Reg$.
 
 \section{B-bounded PDA}
 
-Proof by contradiction with assumption: $ \exists B = b $ such that B-bounded PDA M accepts $ L = \{0^n1^n: n \geq 1\} $. Pick $ w = 0^b1^b \in L $ and run M on w. From the definition of M, upon reading the last 0, the stack hight will reach b and M will crash and reject w. But from the assumption M should accept w. This is a contradiction. Therefore L can't be accepted by a B-bounded PDA for any B.
+A B-bounded PDA is in fact a FA. $ L = \{0^n1^n: n \geq 1\} \notin Reg \implies$ L cannot be accepted by any FA $ \implies $ L cannot be accepted by any B-bounded PDA.
 
-\section{Halting problem for PDA}
+\section{Liveness problem for PDA}
 
-\section{Loops}
-
-\section{FA with a timer}
-
-To be simple, the FA can make 1 transition in every time unit.
+Every PDA has a finite stack alphabet and a finite state set. $ \exists $ input w such that PDA M has an infinite execution on w $ \iff \exists $ (state, stack-top) pair $ (q, \gamma) $ such that M can transit from $ (q, \gamma) $ to $ (q, \gamma) $ via a sequence of $ \lambda $ transitions, during which the stack hight doesn't get below the initial stack hight. An algorithm can detect the existence of such a $ (q, \gamma) $ as follows:
+\begin{enumerate}
+	\item for each possible $ (q, \gamma) $, simulate M starting from state q with $ \gamma $ on its stack top: run each possible $ \lambda $ transition sequence and terminate a run if the sequence length exceeds $ \mid Q \mid \mid \Gamma \mid $, or if the stack hight gets below the initial stack hight, or if M gets back to $ (q, \gamma) $. In the last case - getting back to $ q, \gamma $, return true.
+	\item if the previous loop finishes, return false.
+\end{enumerate}
 
 \end{document}
