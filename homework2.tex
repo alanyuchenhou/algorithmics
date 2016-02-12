@@ -15,17 +15,15 @@
 
 \subsection{10-change TM}
 
-The smallest class is Regular. The proof is as follows:
-$ \forall L \in Regular \exists FA \ M_1 $ accepting L. We can construct a 10-change TM M to simulate $ M_1 $ and accept L:
-\begin{lstlisting}
-def M(w):
-	run M_1
-	for \gamma in w:
-		feed \gamma to M_1
-	if M_1 returns yes:
-		return yes
-\end{lstlisting}
-Clearly, M is TM and it doesn't change any symbol. Therefore M is a 10-change TM that accepts L.
+The smallest class is Regular, because any 10-change TM can be simulated by a FA. The proof is as follows:
+\begin{enumerate}
+	\item use FA's read to simulate TM's write;
+	\item use a table to keep track of changes;
+	\item when TM moves left, FA moves left;
+	\item when TM moves right, FA moves right;
+	\item for every symbol, use homomorphism to generate the new symbol sequence for the FA, \item taking into account the symbols the TM is going to change;
+	\item let the FA work on the new symbol sequence;
+\end{enumerate}
 
 \subsection{10-change-per-cell TM}
 
@@ -42,18 +40,16 @@ Notice that M changes a cell at most twice.
 
 \section{1-turn TM}
 
-The smallest class is Regular. The proof is as follows:
-$ \forall L \in Regular \exists FA \ M_1$ accepting L. We can construct a 1-turn TM M to simulate $ M_1 $ and accept L:
-\begin{lstlisting}
-def M(w):
-	run M_1
-	for \gamma in w:
-		feed \gamma to M_1
-	if M_1 returns yes:
-		return yes
-\end{lstlisting}
-Clearly, M is TM and its head makes 0 turn. Therefore M is a 1-turn TM that accepts L.
-
+The smallest class is Regular, because any 1-turn TM can be simulated by a FA. The proof is as follows:
+\begin{enumerate}
+	\item the input of the FA has 4 tracks;
+	\item track 1: the 1st symbol the TM reads during the right move;
+	\item track 2: the last symbol the TM reads during the right move;
+	\item track 3: the 1st symbol the TM reads during the left move;
+	\item track 4: the last symbol the TM reads during the left move;
+	\item the FA makes only one rightward move and simulate the backward move of the TM along the way;
+		
+\end{enumerate}
 
 \section{Jump TM}
 
@@ -64,7 +60,11 @@ def M(w):
 		if N would move left to cell C:
 			jump to the left end
 			move right a few times
-			stop at C(guess when to stop)
+			mark C(guess where it is)
+			move right once(verify the marked cell was the right cell)
+			jump to the left end
+			move right a few times
+			stop at C
 		else:
 			run exactly like N
 \end{lstlisting}
@@ -125,5 +125,11 @@ def is_zero(X):
 		return true
 	
 \end{lstlisting}	
+
+\section{}
+
+\section{}
+
+The machine can be simulated with a bounded stack machine(finite memory), which can be simulated by a FA. The existence of B is equivalent to the non-emptiness of the FA, which is decidable.
 
 \end{document}
