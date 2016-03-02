@@ -11,6 +11,33 @@
 \author{Yuchen Hou}
 \maketitle
 
+\section{emptiness of 2-way FA with counter is undecidable}
+approach 2
+tape: head, junk, junk, junk, ... tail
+simulate 2CM with target machine:
+2CM / target
+state transition / state transition
+update x / update counter
+increment y / move right
+decrement y / move left
+test y == 0 / test head = state
+this simulation is unfaithful in that the target crashes upon head moves to the right of tail
+\subsection{observations}
+2CM halts $ \iff \exists $ w accepted by target machine 
+
+\section{emptiness of FA with 2 heads is undecidable}
+approach 1
+2CM halts $ \iff L(M) \neq \emptyset$
+
+\section{2-stack 1-turn PDA}
+approach 1 with reverse configuration sequence
+target machine reads through the sequence and push every configurations on the 2 stacks
+stack 2 pop once
+stack 1 and stack 2 pop together and validate the transitions
+
+\section{algorithm design}
+a counter is a stack with unary alphabet. replace the stack with counter. make 2 cuts on the counters evolution at their peaks, into monotonic region. check the 4 values at the 2 cuts and analyze the evolution between the 2 peaks with linear equations???? too hard!!!!
+
 \section{Acceptance problem for TM is undecidable}
 
 \section{Emptiness problem for jump-LBA is undecidable}
@@ -20,5 +47,17 @@
 \section{Reverse of R is R}
 
 \section{Emptiness problem for read-only 2-TM is undecidable}
+
+\section{2CM 2 counter machine simulating a TM}
+Given TM M, is L(M) = empty? is undecidable.
+treat every TM as a 2CM. A TM configuration:
+config = #state#count1#count2#
+execution:
+config1#instruction4#config2#instruction87#
+2 approaches:
+\begin{enumerate}
+	\item feed the arbitrary execution of the 2-counter machine to the target machine
+	\item simulate the 2-counter machine with the target machine
+\end{enumerate}
 
 \end{document}
