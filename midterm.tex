@@ -1,0 +1,81 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{cite}
+\begin{document}
+\lstset{language=python}
+\title{CS 516 homework 1}
+\author{Yuchen Hou}
+\maketitle
+
+\section{decidability}
+
+\subsection{algorithm design}
+
+\subsubsection{key words}
+decidable, recursive, there is an algorithm
+
+\subsubsection{solution}
+no efficiency concern, anything that works is fine.
+
+\section{undecidability}
+
+\subsection{key words}
+undecidable, no algorithm
+
+\subsection{solution}
+halting problem is undecidable of 2CM
+
+\section{undecidability: emptiness problem for TM}
+standard undecidability proof
+
+\section{RE proof}
+proof $ L \in RE $.
+
+\subsection{solution}
+write a function:
+def TM(word):
+	if $ word \in L $:
+		return yes
+
+\section{$ L \in RE $}
+$ L' = \{y: ya \in L \} \in RE $
+
+\subsection{Proof}
+$ L \in RE \implies \exists$ TM such that:
+
+def TM(word):
+	if $ word \in L $:
+		return yes
+
+We construct M(word):
+
+def M(word):
+	if TM(word + a) == yes:
+		return yes
+		
+\section{$ L_1, L_2 \in R$}
+proof $ L = \{xy: x \in L_1, y \in _2\} \in R$
+	
+There are 2 algorithms $ M_1, M_2 $ to recognize $ L_1, L_2 $.
+Construct M to recognize to L:
+\begin{itemize}
+	\item input: w
+	\item cut w into x and y f, enumerate all possibilities
+	\item for each pair (x, y) \{if M1(x) == yes and M2(y) == yes return yes\}
+	\item return no
+\end{itemize}
+
+\section{undecidability}
+
+\subsection{reduction}
+Language A and B. Proof: if A is undecidable, B is undecidable.
+
+\subsection{proof by contradiction}
+
+assume B is decidable, there is algorithm M to recognize B. construct algorithm N to recognize A.
+
+\end{document}
