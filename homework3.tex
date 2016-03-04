@@ -11,29 +11,77 @@
 \author{Yuchen Hou}
 \maketitle
 
-\section{emptiness of 2-way FA with counter is undecidable}
-approach 2
-tape: head, junk, junk, junk, ... tail
-simulate 2CM with target machine:
-2CM / target
-state transition / state transition
-update x / update counter
-increment y / move right
-decrement y / move left
-test y == 0 / test head = state
-this simulation is unfaithful in that the target crashes upon head moves to the right of tail
-\subsection{observations}
-2CM halts $ \iff \exists $ w accepted by target machine 
+\section{Emptiness problem for 2-way FA with counter is undecidable}
 
-\section{emptiness of FA with 2 heads is undecidable}
-approach 1
-2CM halts $ \iff L(M) \neq \emptyset$
+\subsection{Observations and approach}
+We can reduce halting problem of 2CM(undecidable) to emptiness problem of 2-way FA with 1 counter(2-1 FA for short) to show it is undecidable.
 
-\section{2-stack 1-turn PDA}
-approach 1 with reverse configuration sequence
-target machine reads through the sequence and push every configurations on the 2 stacks
-stack 2 pop once
-stack 1 and stack 2 pop together and validate the transitions
+\subsection{Proof}
+We can construct a 2-1 FA M to simulate the 2CM N this way:
+\begin{itemize}
+	\item create this tape for M to work on: [begin, ?, ?, ... ?, end], where begin and end are special tape symbols indication the begin and end of the tape; ? is a any tape symbol;
+	\item let 2 counters of N be c1 and c2; let the counter of M be c3;
+	\item use c3 to simulate c2;
+	\item M has the same states as N;
+	\item M simulates N following the rules in this table:
+		
+	\begin{tabularx}{0.5\textwidth}{|X|c|}  \hline
+		 N's action & M's action \\ \hline
+		 state transition & same state transition \\ \hline
+		 operation on c2 & same operation on c3 \\ \hline
+		 increment c1 & move head right \\ \hline
+		 decrement c1 & move head left \\ \hline
+		 test c1 == 0 & test head pointing to begin \\ \hline
+	\end{tabularx}
+\end{itemize}
+This simulation is unfaithful because M crashes upon head moves to the right of tail. However, we still have the conclusion that N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for 2-way FA with counter is undecidable.
+
+\section{Emptiness problem for FA with 2 heads is undecidable}
+
+\subsection{Observations and approach}
+We can reduce halting problem of a 2CM(undecidable) N to emptiness problem of a 2-head FA M to show it is undecidable.
+
+\subsection{Proof}
+We can run M on the execution of N as follows:
+\begin{itemize}
+	\item record the execution of N on the tape in this format: [configuration[1], configuration[2] ... configuration[n]], where configuration[i] = (instruction, state, counter1, counter2) is the ith configuration in the execution;
+	\item move head2 to the 2nd configuration;
+	\item let 2 heads move forward at the same speed while head1 stays 1 configuration behind head2, so that they can check the each transition from one configuration to the next one is valid;
+	\item verify the 1st configuration is valid initial configuration;
+	\item for each transition:
+	\begin{itemize}
+		\item head1 reads the instruction; M changes state to remember the instruction;
+		\item 2 heads read the 2 states and verify the state transition is valid; M changes state to remember the 2 states;
+		\item 2 heads read the 2 values for counter1 and verify the its update is valid;
+		\item 2 heads read the 2 values for counter2 and verify the its update is valid;
+	\end{itemize}
+	\item verify the last configuration is valid final configuration;
+\end{itemize}
+N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for FA with 2 heads is undecidable.
+
+\section{Emptiness problem for 2-stack 1-turn PDA is undecidable}
+
+\subsection{Observations and approach}
+We can reduce halting problem of a 2CM(undecidable) N to emptiness problem of a 2-stack 1-turn M to show it is undecidable.
+
+\subsection{Proof}
+We can run M on the execution of N as follows:
+\begin{itemize}
+	\item record the execution of N on the tape in the reverse of this format: [configuration[1], configuration[2] ... configuration[n]], where configuration[i] = (instruction, state, counter1, counter2) is the ith configuration in the execution;
+	\item M reads through the tape and pushs every symbol on both stacks
+	\item stack 2 pops 1 configuration
+	\item let 2 stack pop at the same speed while stack1 keeps 1 configuration more than stack2, so that they can check the each transition from one configuration to the next one is valid;
+	\item verify the 1st configuration is valid initial configuration;
+	\item for each transition:
+	\begin{itemize}
+		\item stack1 pops and reads the instruction; M changes state to remember the instruction;
+		\item 2 stacks pop and read the 2 states and verify the state transition is valid; M changes state to remember the 2 states;
+		\item 2 stacks pop and read the 2 values for counter1 and verify the its update is valid;
+		\item 2 stacks pop and read the 2 values for counter2 and verify the its update is valid;
+	\end{itemize}
+	\item verify the last configuration is valid final configuration;
+\end{itemize}
+N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for 2-stack 1-turn PDA is undecidable.
 
 \section{algorithm design}
 a counter is a stack with unary alphabet. replace the stack with counter. make 2 cuts on the counters evolution at their peaks, into monotonic region. check the 4 values at the 2 cuts and analyze the evolution between the 2 peaks with linear equations???? too hard!!!!
@@ -51,9 +99,9 @@ a counter is a stack with unary alphabet. replace the stack with counter. make 2
 \section{2CM 2 counter machine simulating a TM}
 Given TM M, is L(M) = empty? is undecidable.
 treat every TM as a 2CM. A TM configuration:
-config = #state#count1#count2#
+config = state;count1;count2;instruction4;
 execution:
-config1#instruction4#config2#instruction87#
+config1;config2
 2 approaches:
 \begin{enumerate}
 	\item feed the arbitrary execution of the 2-counter machine to the target machine
