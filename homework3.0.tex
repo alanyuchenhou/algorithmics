@@ -11,7 +11,6 @@
 \author{Yuchen Hou}
 \maketitle
 
-
 \section{A-TM-abba is undecidable}
 Proof by reduction and contradiction with assumption A-TM-abba is decidable. From the assumption, we can construct decider N(input = [M]) to decide A-TM-abba. We can construct decider O(input = [M, w]) to decide A-TM:
 \begin{enumerate}
@@ -27,7 +26,7 @@ Proof by reduction and contradiction with assumption A-TM-abba is decidable. Fro
 This is a contradiction with A-TM is undecidable. Therefore, A-TM-abba is undecidable.
 
 \section{E-jump-LBA is undecidable}
-Proof by reduction and contradiction with assumption jump-LBA is decidable. From the assumption, we can construct decider N(input = [M]) to decide E-jump-LBA. We can construct decider O(input=[M, w]) to decide A-TM:
+Proof by reduction and contradiction with assumption E-jump-LBA is decidable. From the assumption, we can construct decider N(input = [M]) to decide E-jump-LBA. We can construct decider O(input=[M, w]) to decide A-TM:
 \begin{enumerate}
 	\item construct jump-LBA P(input = x) to accept accepting computation histories of M on w:
 	\begin{enumerate}
@@ -42,19 +41,38 @@ Proof by reduction and contradiction with assumption jump-LBA is decidable. From
 \end{enumerate}
 This is a contradiction with A-TM is undecidable. Therefore, E-jump-LBA is undecidable.
 
-\section{Language is RE}
+\section{Language is in RE}
+As L is in R, we can construct decider M to decide L. Therefore we can construct TM N(input = x) to accept L':
+\begin{enumerate}
+	\item guess word y
+	\item run M on yxy
+	\item if M accepts yxy: accept x
+\end{enumerate}
+As TM N accepts L', L' is in RE.
 
 \section{Reverse of R is R}
+As L is decidable, we can construct decider M to decide L. Therefore we can construct decider N(input = x) to decide $ L^r $:
+\begin{enumerate}
+	\item reverse x in place to get $ x^r $ by swapping corresponding symbol pairs: first symbol with last symbol, second symbol with second last symbol, etc
+	\item run M on $ x^r $
+	\item if M accepts $ x^r $: accept x
+	\item if M rejects $ x^r $: reject x
+\end{enumerate}
+As decider N decide $ L^r $, $ L^r $ is decidable.
 
-\section{Emptiness problem for read-only 2-TM is undecidable}
-
-
-
-
-
-
-\section{df}
-
-equivalent to 2 counter machine
+\section{E-read-only-2-TM is undecidable}
+Proof by reduction and contradiction with assumption that E-read-only-2-TM is decidable. From the assumption, there is decider N to decide E-read-only-2-TM. Then there is decider O(input = [M]) to decide E-2CM:
+\begin{enumerate}
+	\item verify M is 2CM
+	\item construct read-only-2-TM P(input = x) to simulate M:
+	\begin{enumerate}
+		\item use the x coordinate of the head to simulate counter x in M
+		\item use the y coordinate of the head to simulate counter y in M
+	\end{enumerate}
+	\item run N on [P]
+	\item if N accepts [P]: accept M
+	\item if N rejects [P]: reject M
+\end{enumerate}
+This contradicts theorem[E-2CM is undecidable]. Therefore, E-read-only-2-TM is undecidable.
 
 \end{document}
