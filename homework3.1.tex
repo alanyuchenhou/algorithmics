@@ -7,7 +7,7 @@
 \usepackage{cite}
 \begin{document}
 \lstset{language=python, tabsize=4}
-\title{CS 516 homework 3}
+\title{CS 516 homework 3.1}
 \author{Yuchen Hou}
 \maketitle
 
@@ -84,28 +84,6 @@ We can run M on the execution of N as follows:
 N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for 2-stack 1-turn PDA is undecidable.
 
 \section{algorithm design}
-a counter is a stack with unary alphabet. replace the stack with counter. make 2 cuts on the counters evolution at their peaks, into monotonic region. check the 4 values at the 2 cuts and analyze the evolution between the 2 peaks with linear equations???? too hard!!!!
-
-\section{Acceptance problem for TM is undecidable}
-
-\section{Emptiness problem for jump-LBA is undecidable}
-
-\section{Language is RE}
-
-\section{Reverse of R is R}
-
-\section{Emptiness problem for read-only 2-TM is undecidable}
-
-\section{2CM 2 counter machine simulating a TM}
-Given TM M, is L(M) = empty? is undecidable.
-treat every TM as a 2CM. A TM configuration:
-config = state;count1;count2;instruction4;
-execution:
-config1;config2
-2 approaches:
-\begin{enumerate}
-	\item feed the arbitrary execution of the 2-counter machine to the target machine
-	\item simulate the 2-counter machine with the target machine
-\end{enumerate}
+make 2 cuts on the counters evolution at their peaks, to cut it into 3 monotonic regions. check the 4 values at the 2 cuts and analyze the evolution between the 2 peaks with linear equations.
 
 \end{document}
