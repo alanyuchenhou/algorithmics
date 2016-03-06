@@ -19,7 +19,7 @@ Proof by reduction(from A-2CM to E-2-way+1-counter-FA) and contradiction(assumpt
 \end{enumerate}
 We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
-	\item construct 2-way+1-counter-FA Q(input = [w], where w is a word) to simulate P:
+	\item construct 2-way+1-counter-FA Q(input = [w], where w is a word) to accept anything when P halts:
 	\begin{enumerate}
 		\item simulate P with its counter simulating the 1st counter in P and its head position on the tape simulating the 2nd counter in P
 		\item if the simulation finishes: accept w
@@ -68,6 +68,9 @@ We can construct a decider O(input = [P], where P is a 2CM) to decide A-2CM:
 		\item assert c[l] is an accepting configuration
 		\item accept w
 	\end{enumerate}
+	\item run N on [Q]
+	\item if N rejects [Q]: accept [P]
+	\item if N accepts [Q]: reject [P]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore E-2-stack-push-pop-PDA is undecidable.
 
