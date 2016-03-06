@@ -11,79 +11,67 @@
 \author{Yuchen Hou}
 \maketitle
 
-\section{Emptiness problem for 2-way FA with counter is undecidable}
+\section{E-2-way+1-counter-FA is undecidable}
+Proof by reduction(from A-2CM to E-2-way+1-counter-FA) and contradiction(assumption: E-2-way+1-counter-FA is decidable). From the assumption, we can construct decider N(input = [M], where M is a 2-way+1-counter-FA) to decide E-2-way+1-counter-FA:
+\begin{enumerate}
+	\item if L(M) is empty: accept [M]
+	\item if L(M) is not empty: reject [M]
+\end{enumerate}
+We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
+\begin{enumerate}
+	\item construct 2-way+1-counter-FA Q(input = [w], where w is a word) to simulate P:
+	\begin{enumerate}
+		\item simulate P with its counter simulating the 1st counter in P and its head position on the tape simulating the 2nd counter in P
+		\item if the simulation finishes: accept w
+	\end{enumerate}
+	\item run N on [Q]
+	\item if N rejects [Q]: accept [P]
+	\item if N accepts [Q]: reject [P]
+\end{enumerate}
+This is a contradiction with A-2CM is undecidable. Therefore E-2-way+1-counter-FA is undecidable.
 
-\subsection{Observations and approach}
-We can reduce halting problem of 2CM(undecidable) to emptiness problem of 2-way FA with 1 counter(2-1 FA for short) to show it is undecidable.
+\section{E-2-head-FA is undecidable}
+Proof by reduction(from A-2CM to E-2-head-FA) and contradiction(assumption: E-2-head-FA is decidable). From the assumption, we can construct decider N(input = [M], where M is a 2-head-FA) to decide E-2-head-FA:
+\begin{enumerate}
+	\item if L(M) is empty: accept [M]
+	\item if L(M) is not empty: reject [M]
+\end{enumerate}
+We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
+\begin{enumerate}
+	\item construct 2-head-FA Q(input = [w], where w is a word) to accept accepting computation histories of P:
+	\begin{enumerate}
+		\item assert w has valid computation history format: [c[1], c[2], ..., c[l]], where c[i] = [instruction, state, counter1, counter2]
+		\item assert c[1] is the initial configuration for P
+		\item assert all configuration transitions are valid (2 heads check adjacent configurations: read instruction, check state and counter updates)
+		\item assert c[l] is an accepting configuration
+		\item accept w
+	\end{enumerate}
+	\item run N on [Q]
+	\item if N rejects [Q]: accept [P]
+	\item if N accepts [Q]: reject [P]
+\end{enumerate}
+This is a contradiction with A-2CM is undecidable. Therefore E-2-head-FA is undecidable.
 
-\subsection{Proof}
-We can construct a 2-1 FA M to simulate the 2CM N this way:
-\begin{itemize}
-	\item create this tape for M to work on: [begin, ?, ?, ... ?, end], where begin and end are special tape symbols indication the begin and end of the tape; ? is a any tape symbol;
-	\item let 2 counters of N be c1 and c2; let the counter of M be c3;
-	\item use c3 to simulate c2;
-	\item M has the same states as N;
-	\item M simulates N following the rules in this table:
-		
-	\begin{tabularx}{0.5\textwidth}{|X|c|}  \hline
-		 N's action & M's action \\ \hline
-		 state transition & same state transition \\ \hline
-		 operation on c2 & same operation on c3 \\ \hline
-		 increment c1 & move head right \\ \hline
-		 decrement c1 & move head left \\ \hline
-		 test c1 == 0 & test head pointing to begin \\ \hline
-	\end{tabularx}
-\end{itemize}
-This simulation is unfaithful because M crashes upon head moves to the right of tail. However, we still have the conclusion that N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for 2-way FA with counter is undecidable.
+\section{E-2-stack-push-pop-PDA is undecidable}
+Proof by reduction(from A-2CM to E-2-stack-push-pop-PDA) and contradiction(assumption: E-2-stack-push-pop-PDA is decidable). From the assumption, we can construct decider N(input = [M], where M is a 2-stack-push-pop-PDA) to decide E-2-stack-push-pop-PDA:
+\begin{enumerate}
+	\item if L(M) is empty: accept [M]
+	\item if L(M) not is empty: reject [M]
+\end{enumerate}
+We can construct a decider O(input = [P], where P is a 2CM) to decide A-2CM:
+\begin{enumerate}
+	\item construct a decider Q(input = [w], where w is a word) to accept accepting computation histories of P:
+	\begin{enumerate}
+		\item read every symbol in w, push it on both stacks, and assert w is the reverse of a valid computation history format: [c[1], c[2], ..., c[l]], where c[i] = [instruction, state, counter1, counter2]
+		\item assert c[1] is the initial configuration for P (1 stack pops c[1])
+		\item assert all configuration transitions are valid (2 stacks pop and check adjacent configurations: read instruction, check state and counter updates)
+		\item assert c[l] is an accepting configuration
+		\item accept w
+	\end{enumerate}
+\end{enumerate}
+This is a contradiction with A-2CM is undecidable. Therefore E-2-stack-push-pop-PDA is undecidable.
 
-\section{Emptiness problem for FA with 2 heads is undecidable}
-
-\subsection{Observations and approach}
-We can reduce halting problem of a 2CM(undecidable) N to emptiness problem of a 2-head FA M to show it is undecidable.
-
-\subsection{Proof}
-We can run M on the execution of N as follows:
-\begin{itemize}
-	\item record the execution of N on the tape in this format: [configuration[1], configuration[2] ... configuration[n]], where configuration[i] = (instruction, state, counter1, counter2) is the ith configuration in the execution;
-	\item move head2 to the 2nd configuration;
-	\item let 2 heads move forward at the same speed while head1 stays 1 configuration behind head2, so that they can check the each transition from one configuration to the next one is valid;
-	\item verify the 1st configuration is valid initial configuration;
-	\item for each transition:
-	\begin{itemize}
-		\item head1 reads the instruction; M changes state to remember the instruction;
-		\item 2 heads read the 2 states and verify the state transition is valid; M changes state to remember the 2 states;
-		\item 2 heads read the 2 values for counter1 and verify the its update is valid;
-		\item 2 heads read the 2 values for counter2 and verify the its update is valid;
-	\end{itemize}
-	\item verify the last configuration is valid final configuration;
-\end{itemize}
-N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for FA with 2 heads is undecidable.
-
-\section{Emptiness problem for 2-stack 1-turn PDA is undecidable}
-
-\subsection{Observations and approach}
-We can reduce halting problem of a 2CM(undecidable) N to emptiness problem of a 2-stack 1-turn M to show it is undecidable.
-
-\subsection{Proof}
-We can run M on the execution of N as follows:
-\begin{itemize}
-	\item record the execution of N on the tape in the reverse of this format: [configuration[1], configuration[2] ... configuration[n]], where configuration[i] = (instruction, state, counter1, counter2) is the ith configuration in the execution;
-	\item M reads through the tape and pushs every symbol on both stacks
-	\item stack 2 pops 1 configuration
-	\item let 2 stack pop at the same speed while stack1 keeps 1 configuration more than stack2, so that they can check the each transition from one configuration to the next one is valid;
-	\item verify the 1st configuration is valid initial configuration;
-	\item for each transition:
-	\begin{itemize}
-		\item stack1 pops and reads the instruction; M changes state to remember the instruction;
-		\item 2 stacks pop and read the 2 states and verify the state transition is valid; M changes state to remember the 2 states;
-		\item 2 stacks pop and read the 2 values for counter1 and verify the its update is valid;
-		\item 2 stacks pop and read the 2 values for counter2 and verify the its update is valid;
-	\end{itemize}
-	\item verify the last configuration is valid final configuration;
-\end{itemize}
-N halts $ \iff \exists w \in L(M) \iff L(M) \neq \emptyset$. Therefore, the emptiness problem for 2-stack 1-turn PDA is undecidable.
-
-\section{algorithm design}
+\section{E-2-counter-increment-decrement-FA is decidable}
 make 2 cuts on the counters evolution at their peaks, to cut it into 3 monotonic regions. check the 4 values at the 2 cuts and analyze the evolution between the 2 peaks with linear equations.
 
 \end{document}
