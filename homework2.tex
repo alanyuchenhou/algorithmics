@@ -13,61 +13,43 @@
 
 \section{TM: change}
 
-\subsection{10-change TM}
-
-The smallest class is Regular, because any 10-change TM can be simulated by a FA. The proof is as follows:
+\subsection{10-change-TM is equivalent to FA}
+The smallest class is Regular, because any 10-change TM is equivalent to a FA. Given any 10-change TM N, we can construct FA M to simulate N:
 \begin{enumerate}
-	\item use FA's read to simulate TM's write;
-	\item use a table to keep track of changes;
-	\item when TM moves left, FA moves left;
-	\item when TM moves right, FA moves right;
-	\item for every symbol, use homomorphism to generate the new symbol sequence for the FA, \item taking into account the symbols the TM is going to change;
-	\item let the FA work on the new symbol sequence;
+	\item guess all 10 changes N will make and generate the input tape with changes
+	\item when N moves left, M moves left
+	\item when N moves right, M moves right
+	\item use M's read to simulate N's write
+	\item use finite control to keep track of 10 changes
 \end{enumerate}
 
-\subsection{10-change-per-cell TM}
-
-$ \forall TM M_1 $, we can construct a 10-change-per-cell TM M to simulate $ M_1 $:
-\begin{lstlisting}
-def M(w):
-	run M_1 on w:
-		every time M_1 changes a symbol, shift the head and symbols in the
-		non-blank region to the blank region on the right
-	if M_1 returns yes:
-		return yes
-\end{lstlisting}
+\subsection{10-change-per-cell TM simulates TM}
+Given TM N, we can construct a 10-change-per-cell TM M to simulate N:
+\begin{enumerate}
+	\item if N writes a symbol: shift the head and symbols in the
+	non-blank region to the blank region on the right
+	\item if N makes any other move: make the same move
+\end{enumerate}
 Notice that M changes a cell at most twice.
 
 \section{1-turn TM}
-
-The smallest class is Regular, because any 1-turn TM can be simulated by a FA. The proof is as follows:
+The smallest class is Regular, because given 1-turn TM M, we can construct FA N to simulate M:
 \begin{enumerate}
-	\item the input of the FA has 4 tracks;
-	\item track 1: the 1st symbol the TM reads during the right move;
-	\item track 2: the last symbol the TM reads during the right move;
-	\item track 3: the 1st symbol the TM reads during the left move;
-	\item track 4: the last symbol the TM reads during the left move;
-	\item the FA makes only one rightward move and simulate the backward move of the TM along the way;
-		
+	\item the input of the FA has 4 tracks
+	\item track 1: the 1st symbol the TM reads during the right move
+	\item track 2: the last symbol the TM reads during the right move
+	\item track 3: the 1st symbol the TM reads during the left move
+	\item track 4: the last symbol the TM reads during the left move
+	\item the FA makes only one rightward move and simulate the backward move of the TM along the way		
 \end{enumerate}
 
 \section{Jump TM}
 
-$ \forall$ TM N, we can construct a jump TM M to simulate N:
-\begin{lstlisting}
-def M(w):
-	run on w like N:
-		if N would move left to cell C:
-			jump to the left end
-			move right a few times
-			mark C(guess where it is)
-			move right once(verify the marked cell was the right cell)
-			jump to the left end
-			move right a few times
-			stop at C
-		else:
-			run exactly like N
-\end{lstlisting}
+Given TM N, we can construct a jump TM M to simulate N:
+\begin{enumerate}
+	\item if N moves left: move left(jump left, move right a few times, stop(guess when to stop) and mark), move right to verify the marked cell is right, jump left, move right a few times, stop at mark
+	\item if N makes any other move: make the same move
+\end{enumerate}
 
 \section{Simulating 2 counters with 1 queue}
 The queue simulates 2 counters: A and B. The queue alphabet = \{A, B, 1\}.
@@ -124,12 +106,6 @@ def is_zero(X):
 	else:
 		return true
 	
-\end{lstlisting}	
-
-\section{}
-
-\section{}
-
-The machine can be simulated with a bounded stack machine(finite memory), which can be simulated by a FA. The existence of B is equivalent to the non-emptiness of the FA, which is decidable.
+\end{lstlisting}
 
 \end{document}
