@@ -1,0 +1,80 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{cite}
+\begin{document}
+\lstset{language=python, tabsize=4}
+\title{CS 516 semilinear}
+\author{Yuchen Hou}
+\maketitle
+
+\section{halting is decidable}
+
+\section{E-L is decidable}
+\begin{enumerate}
+	\item show L is semi-linear
+	\item E-L is decidable
+\end{enumerate}
+
+\section{F(x1, x2 ... xk) is Presburger}
+\begin{enumerate}
+	\item x1...xk don't move, then directly write F into a Presburger formular. e.g. homework 2
+	\item construct L such that L is semiliear and \#(L) is definable by F. e.g. homework 5
+\end{enumerate}
+
+\section{L is semi-linear}
+\begin{itemize}
+	\item show L is regular
+	\item show L is CFL
+	\item show L = semi-linear intersect regular intersect semi-linear-commutative
+\end{itemize}
+
+\section{graph example}
+
+\subsection{problem}
+\begin{itemize}
+	\item given: directed graph G, each edge has a color; 2 nodes v1, v2 in G
+	\item on a walk from v1 to v2, we count the edges of different colors
+	\item G is good if there is walk that meets condition: red count = orange count = yellow count
+	\item question is G good?
+\end{itemize}
+
+\subsection{problem is decidable}
+\begin{itemize}
+	\item L = \{walk: walk meets condition\}
+	\item L = L1 intersect L2
+	\item L1 = \{all walks from v1 to v2\} is regular
+	\item L2 = \{words: red count = orange count = yellow count\} is semi-linear
+\end{itemize}
+
+\section{PDA example}
+
+\subsection{problem}
+money = 0
+\begin{itemize}
+	\item M is PDA, run M on input w, see pushes and pops on the stack
+	\item push a: money += 5
+	\item pop b: money -= 10
+	\item M is good if there is w meeting condition: money > 0
+	\item question: is M good?
+\end{itemize}
+
+\subsection{problem is decidable}
+\begin{itemize}
+	\item L = \{run: run meets condition\}
+	\item run is the sequence of push-a(A) and pop-b(B)
+	\item L = L1 intersect L2
+	\item L2 = \{word: 5 A count - 10 B count > 0\} is semi-linear and commutative
+	\item L1 = all possible sequence
+	\item construct PDA N to accept L1:
+	\begin{enumerate}
+		\item run M on w (guess)
+		\item the run generates sequence, check the guess is correct
+		\item if M accepts w and the entire sequence is checked, N accept sequence
+	\end{enumerate}
+\end{itemize}
+
+\end{document}
