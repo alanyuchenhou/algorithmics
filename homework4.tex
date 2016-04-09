@@ -72,5 +72,37 @@ Then we do quantifier elimination on each part separately. The satisfiability
 of real formula and Presburger formula is decidable, therefore the 
 satisfiability of mixed-linear formula is satisfiable.
 
+\section{P is Presburger}
+A k-vector-adder M is a FA, where W is the addition of some constant and a 
+sequence of input symbols.
+\begin{align*}
+	P(W, W')
+	\iff& \exists q, q' ((q, W) \rightarrow* (q', W'))\\
+	\iff& \exists q, q' ((q, 0) \rightarrow* (q', W'-W))\\
+	\iff& P(0, W' - W)
+\end{align*}
+M accepts Regular language L. We can construct semi-linear language $ K = \{w 
+\mid \#(w) = W'-W\} $. Semi-linear language $ J = L \cap K $ is defined by P. 
+Therefore, P is Presburger.
+
+\section{4 tanks make a 2CM}
+
+\section{Stability of PDA is decidable}
+We define $ \Sigma = \{A(push \ a), B(push \ b), C(pop \ a), D(pop \ b)\} $.
+We can construct regular language $ L_1 = \Sigma $* and semi-linear language $ 
+L_2 = \{w | -2\#_Aw + 3\#_Bw \ge 0 \land 3(-2\#_Aw + 3\#_Bw) \ge \#_Aw-\#_Cw + 
+\#_Bw-\#_Dw\} $. We can construct PDA N (input = w) to accept Semi-linear 
+language $ L = L_1 \cap L_2 $:
+\begin{enumerate}
+	\item run M:
+	\begin{enumerate}
+		\item for each action $ \gamma_1 \in \Sigma $: read $ \gamma_2 $ 
+		from w and assert $ \gamma_1 = \gamma_2 $
+	\end{enumerate}
+	\item assert M is in accepting state
+	\item assert w is completely read
+	\item accept w
+\end{enumerate}
+M is stable is equivalent to N accepts non-empty language, which is decidable.
 
 \end{document}
