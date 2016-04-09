@@ -11,21 +11,26 @@
 \author{Yuchen Hou}
 \maketitle
 
-\section{fd}
-a program is a presberguer formula:
-formula describes the logic of the program.
-
-Example:
-
-program:
-x++
-y++
-return
-
-formula:
-x2 = x1+1 and pc1 = 1 and pc2 = 2
-or
-y2 = y1 + 1 and pc1 = 2 and pc2 = 3
-or
+\section{Termination of Presburger formula is undecidable}
+Proof by reduction (from A-2CM to Termination of Presburger formula) and 
+contradiction (assumption: Termination of Presburger formula is decidable). 
+From the assumption, we can construct decider M (input = F(x, y, z, x', y', 
+z'), where F is a formula ) to decide termination of Presburger formula:
+\begin{enumerate}
+	\item if F terminates: accept F
+	\item else: reject F
+\end{enumerate}
+We can use M to decide A-2CM N:
+\begin{enumerate}
+	\item encode N's transition function $ \delta(q, x, y) $ 
+	(where q is the state and x, y are counts) as formula F(q, x, y, q', x', 
+	y') such 
+	that F(q, x, y, q', x', y') = true $ \iff \delta(q, x, y) = (q', x', y') $
+	\item N terminates $ \iff $ N has an accepting computation history: $ 
+	\exists n \exists q_1 \dots q_n, x_1 \dots x_n, y_1 \dots y_n : F(0, 0, 0, 
+	q_1, x_1, y_1) \land \dots \land F(q_n, x_n, y_n, 1, 1, 1) = true$
+\end{enumerate}
+This is a contradiction with A-2CM is undecidable. Therefore termination of 
+Presburger formula is undecidable.
 
 \end{document}
