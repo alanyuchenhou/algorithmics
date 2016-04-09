@@ -27,10 +27,50 @@ We can use M to decide A-2CM N:
 	y') such 
 	that F(q, x, y, q', x', y') = true $ \iff \delta(q, x, y) = (q', x', y') $
 	\item N terminates $ \iff $ N has an accepting computation history: $ 
-	\exists n \exists q_1 \dots q_n, x_1 \dots x_n, y_1 \dots y_n : F(0, 0, 0, 
-	q_1, x_1, y_1) \land \dots \land F(q_n, x_n, y_n, 1, 1, 1) = true$
+	\exists n \exists q_1 ... q_n, x_1 ... x_n, y_1 ... y_n : F(0, 0, 0, 
+	q_1, x_1, y_1) \land ... \land F(q_n, x_n, y_n, 1, 1, 1) = true$
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore termination of 
 Presburger formula is undecidable.
+
+\section{LP is decidable}
+Proof by reduction: from LP to satisfiability of Presburger formula. LP is 
+equivalent to given formula $ F(x_1 ... x_n, y) $ whether the following formula 
+is satisfiable:
+\begin{align*}
+	LP \iff& \forall x_1 ... x_n \in Z (K \ge y \land F(x_1 ... x_n)) \land 
+	\exists x_1 ... x_n \in Z (K = y \land F(x_1 ... x_n) )
+\end{align*}
+This is the satisfiability of Presburger formula, a decidable problem. 
+Therefore LP is decidable.
+
+\section{A Linear formula is a Presburger formula}
+
+\section{Satisfiability of mixed-linear formula is decidable}
+
+Proof by reduction from satisfiability of mixed-linear formula to linear 
+formula or to linear formula and Presburger formula.
+
+\subsection{Reduction to linear formula}
+A mixed-linear-formula f can be reduced to a linear formula by boolean variable 
+elimination:
+\begin{align*}
+	f(x_1 ... x_k, y_1 ... y_m)
+	&= f(x_1 ... x_k, 0 ... 0)\\
+	&\lor f(x_1 ... x_k, 0 ... 1)\\
+	&\lor f(x_1 ... x_k, 1 ... 0)\\
+	&\lor f(x_1 ... x_k, 1 ... 1)\\
+\end{align*}
+The additive theory of reals is decidable, therefore satisfiability of 
+mixed-linear-constraint is decidable.
+
+\subsection{Reduction to linear formula}
+A mixed-linear-formula f can be separated into 2 parts - an integral part and a 
+real part - by splitting every real variable into an integral part and a real 
+part: $ y = z + w $ where y is real, z is integer and y is real in range(0, 1). 
+Then we do quantifier elimination on each part separately. The satisfiability 
+of real formula and Presburger formula is decidable, therefore the 
+satisfiability of mixed-linear formula is satisfiable.
+
 
 \end{document}
