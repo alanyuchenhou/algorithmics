@@ -77,4 +77,19 @@ money = 0
 	\end{enumerate}
 \end{itemize}
 
+\section{A is in P}
+B in P, so we have a deterministic algorithm algB to solve B.
+A reduces to B, we have function f
+1. f runs polynomial time
+2. for all x, x in A iff f(x) in B
+
+we can construct deterministic polynomial time algorithm algA (input = x) to solve A:
+return algB(f(x))
+
+algA runs in polynomial time.
+
+\section{in NP complete?}
+cracking RSA: unknown
+graph isomorphism: unknown
+
 \end{document}
