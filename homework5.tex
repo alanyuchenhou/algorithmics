@@ -1,0 +1,26 @@
+\documentclass{article}
+\usepackage{listings}
+\usepackage{amsmath}
+\usepackage{fullpage}
+\usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage{cite}
+\begin{document}
+\lstset{language=python, tabsize=4}
+\title{CS 516 homework 5}
+\author{Yuchen Hou}
+\maketitle
+
+\section{3SAT is NP complete}
+translate: x1 or x2 or x3 bar or x4 bar or x5 or x6 bar to (x1 or x2 or y1) and (y1 bar or x3 bar or y2) and (y2 bar or x4 bar or y3) and (y3 bar or x5 or x6 bar)
+
+\section{IDSET is NP complete}
+translate (x1 or x2 or x3 bar) and (x1 or x2 bar or x3) and (x1 or x2 bar or x3) and (x1 or x2 or x3) to graph of triangles
+
+\section{VC is NP complete}
+C is VC of G iff V-C is an IDSET of G
+
+\section{HC is NP complete}
+
+
+\end{document}
