@@ -11,6 +11,72 @@
 \author{Yuchen Hou}
 \maketitle
 
+\section{P VS NP}
+\subsection{definitions}
+P, NP, NP-complete, reduction, PSPACE, co-NP
+
+\subsection{example: factorization is in NP}
+
+\subsubsection{problem}
+given: number n
+question: are there p, q in prime, s.t. n = pq
+
+\subsubsection{proof: algorithm design}
+
+\begin{lstlisting}
+	def algorithm(n):
+		guess p, q // |q| < |n|, |q| < |n|
+		if n = pq and q is prime and q is prime: // deterministic polynomial time
+			return yes
+		else:
+			return no
+\end{lstlisting}
+
+\subsection{X is in NP-complete}
+
+\subsubsection{proof}
+\begin{lstlisting}
+	show X is in NP
+	find Y in NP-complete
+	reduce Y to X
+\end{lstlisting}
+
+\subsection{example: HC1 is NP}
+
+\subsubsection{problem}
+given: direct graph G
+question: is there a walk w on G, s.t. w passes every node in G
+
+\subsubsection{proof: algorithm design}
+prove HC1 is in P by providing a algorithm
+\begin{lstlisting}
+	def algorithm(G):
+		DAG = SCC(G)
+		assert(DAG is connected in one sequence)
+\end{lstlisting}
+
+\subsection{example}
+suppose SAT in P, design polynomial algorithm to solve:
+
+\subsubsection{problem}
+given boolean formula A,B
+question: A = B?
+
+\subsubsection{solution: algorithm design}
+\begin{itemize}
+	\item there is polynomial time algorithm A to solve SAT
+	\item assert (A xor B) is not satisfiable
+\end{itemize}
+
+\section{emptiness proof}
+
+\subsection{emptiness is decidable}
+map the problem to a language = all words intersect with constraints
+show the language is semi-linear (L is reg or L is CF)
+
+\subsubsection{emptiness is undecidable}
+2CM
+
 \section{halting is decidable}
 
 \section{E-L is decidable}
