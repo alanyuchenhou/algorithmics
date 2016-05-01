@@ -11,16 +11,67 @@
 \author{Yuchen Hou}
 \maketitle
 
-\section{3SAT is NP complete}
-translate: x1 or x2 or x3 bar or x4 bar or x5 or x6 bar to (x1 or x2 or y1) and (y1 bar or x3 bar or y2) and (y2 bar or x4 bar or y3) and (y3 bar or x5 or x6 bar)
+\section{$ \overline{L} $ is co-C-complete}
+\begin{itemize}
+	\item L is C-complete $ \implies L \in C \implies \overline{L} \in co-C $.
+	\item L is C-complete $ \implies \forall K \in C (K \leq_m L) \implies 
+	\forall \overline{K} \in co-C (\overline{K} \leq_m \overline{L}) $
+	\item Therefore, $ \overline{L} $ is co-C-complete
+\end{itemize}
 
-\section{IDSET is NP complete}
-translate (x1 or x2 or x3 bar) and (x1 or x2 bar or x3) and (x1 or x2 bar or x3) and (x1 or x2 or x3) to graph of triangles
+\section{PSPACE closure: reduction}
+\begin{itemize}
+	\item $ L \in PSPACE \implies \exists $ polynomial-space decider M to 
+	decide L
+	\item $ L' \leq_m L \implies \exists $ polynomial-time reduction f: L = 
+	f(L')
+	\item Therefore, we can construct a polynomial-space decider N (input = w) 
+	to decide L':
+	\begin{itemize}
+		\item run M on f(w)
+		\item if M accepts f(w): accept w
+		\item else: reject w
+	\end{itemize}
+	\item Therefore, $ L' \in PSPACE $
+\end{itemize}
 
-\section{VC is NP complete}
-C is VC of G iff V-C is an IDSET of G
+\section{P = PSPACE}
+\begin{itemize}
+	\item $ L \in PSPACE-complete \implies $
+	\begin{itemize}
+		\item $ L \in PSPACE \land $
+		\item $ \forall K \in PSPACE, K \leq_p L \implies \exists $ 
+		polynomial-time reduction f: L = f(K)
+	\end{itemize}
+	\item $ L \in P \implies \exists $ deterministic polynomial-time decider to 
+	decide L
+	\item we can construct a polynomial-time decider N (input = w) to decide K:
+	\begin{enumerate}
+		\item run M on f(w)
+		\item if M accepts f(w): accept w
+		\item else: reject w
+	\end{enumerate}
+	\item $ \implies K \in P \implies PSPACE \subseteq P $
+	\item also $ P \subseteq PSPACE $
+	\item $ \implies P = PSPACE $
+\end{itemize}
 
-\section{HC is NP complete}
+\section{DOM-SET $ \in $ NP-complete}
 
+We can show $ DOM-SET \in NP \land VC \leq_m DOM-SET $
+
+\subsection{DOM-SET $ \in $ NP}
+We can construct non-deterministic polynomial-time algorithm to solve DOM-SET:
+\begin{lstlisting}
+	def algorithm(G, k):
+		guess A
+		for node1 in G.nodes() - A:
+			for node2 in A:
+				if (node2, node1) is not an edge:
+					return false
+		return true
+\end{lstlisting}
+
+\subsection{VC $ \leq_m $ DOM-SET}
 
 \end{document}

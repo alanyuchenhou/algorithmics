@@ -158,4 +158,16 @@ algA runs in polynomial time.
 cracking RSA: unknown
 graph isomorphism: unknown
 
+\section{3SAT is NP complete}
+translate: x1 or x2 or x3 bar or x4 bar or x5 or x6 bar to (x1 or x2 or y1) and 
+(y1 bar or x3 bar or y2) and (y2 bar or x4 bar or y3) and (y3 bar or x5 or x6 
+bar)
+
+\section{IDSET is NP complete}
+translate (x1 or x2 or x3 bar) and (x1 or x2 bar or x3) and (x1 or x2 bar or 
+x3) and (x1 or x2 or x3) to graph of triangles
+
+\section{VC is NP complete}
+C is VC of G iff V-C is an IDSET of G
+
 \end{document}
