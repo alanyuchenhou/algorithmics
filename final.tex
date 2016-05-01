@@ -74,8 +74,39 @@ question: A = B?
 map the problem to a language = all words intersect with constraints
 show the language is semi-linear (L is reg or L is CF)
 
-\subsubsection{emptiness is undecidable}
-2CM
+\subsubsection{E-2FA(2 head) is undecidable}
+Reduction: from A-2CM to E-2FA. Let M be a 2CM and x, y its counters. A execution history is a sequence of configurations. A accepting execution starts with initial state, with valid transitions and ends with final state.
+
+\subsubsection{A-T machine is undecidable}
+T is a machine with one variable X. X has instruction set:
+x := 2x;
+x := 3x;
+x := x/2;
+x := x/3;
+2|x;
+3|x;
+
+use T to simulate any 2CM M(x, y):
+2CM => T machine
+x++ => x := 2x;
+y++ => x := 3x;
+...
+
+\section{R and RE}
+
+\subsection{L}
+L is in R, L1 is in Reg. Show L' = {x: there is y in L, s.t. |x| = |y|, xy is in R} is recursive
+
+\section{water pump}
+there is a water pump, pumping water from river 1 and river 2 to a pool. pump is a FA with input symbols as events. Event encoding:
+red => [3,4], [2, 10] // pump water in (3, 4) from river 1 and water in (2, 10) from river 2
+blue => [2, 11], [0,0]
+...
+purple => stop
+
+the pool is unlimited
+question: is there a chance that the total water pumped from river 1 > 2 water pumped from river 2
+
 
 \section{halting is decidable}
 
