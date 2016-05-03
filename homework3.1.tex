@@ -20,7 +20,7 @@ Proof by reduction(from A-2CM to E-2-way+1-counter-FA) and contradiction(assumpt
 We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct 2-way+1-counter-FA Q(input = [w], where w is a word) to 
-	accept long-enough w if P halts:
+	accept non-empty language if P halts:
 	\begin{enumerate}
 		\item simulate P with its counter simulating the 1st counter in P and its head position on the tape simulating the 2nd counter in P
 		\item if the simulation finishes: accept w

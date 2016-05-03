@@ -19,7 +19,7 @@ Proof by reduction(from A-TM to A-TM-abba) and contradiction(assumption: A-TM-ab
 \end{enumerate}
 We can construct decider O(input = [P, w], where P is a TM and w is a word) to decide A-TM:
 \begin{enumerate}
-	\item construct TM Q(input = x, where x is a word) to accept abba when P 
+	\item construct TM Q(input = x, where x is a word) to accept abba if P 
 	accepts w:
 	\begin{enumerate}
 		\item run P on w
@@ -81,7 +81,7 @@ Proof by reduction(from A-2CM to E-read-only-2-TM) and contradiction(assumption 
 We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct read-only-2-TM Q(input = [w], where w is a word) to accept 
-	everything when P halts:
+	non-empty language if P halts:
 	\begin{enumerate}
 		\item simulate P with its head coordinates simulating the counters
 		\item if the simulation finishes, accept w
