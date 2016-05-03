@@ -12,65 +12,64 @@
 \maketitle
 
 \section{$ \overline{L} $ is co-C-complete}
-\begin{itemize}
-	\item L is C-complete $ \implies L \in C \implies \overline{L} \in co-C $.
-	\item L is C-complete $ \implies \forall K \in C (K \leq_m L) \implies 
-	\forall \overline{K} \in co-C (\overline{K} \leq_m \overline{L}) $
+\begin{enumerate}
+	\item $ L \in C-complete \implies $
+	\begin{enumerate}
+		\item $ L \in C \implies \overline{L} \in co-C $
+		\item $ \forall K \in C (K \leq_m L) \iff 
+		\forall \overline{K} \in co-C (\overline{K} \leq_m \overline{L}) $
+	\end{enumerate}
 	\item Therefore, $ \overline{L} $ is co-C-complete
-\end{itemize}
+\end{enumerate}
 
 \section{PSPACE closure: reduction}
-\begin{itemize}
+\begin{enumerate}
 	\item $ L \in PSPACE \implies \exists $ polynomial-space decider M to 
 	decide L
-	\item $ L' \leq_m L \implies \exists $ polynomial-time reduction f: L = 
+	\item $ L' \leq_m L \implies \exists $ polynomial-space reduction f: L = 
 	f(L')
-	\item Therefore, we can construct a polynomial-space decider N (input = w) 
-	to decide L':
-	\begin{itemize}
-		\item run M on f(w)
-		\item if M accepts f(w): accept w
+	\item construct polynomial-space decider N (input = w) to decide L':
+	\begin{enumerate}
+		\item if $ f(w) \in L $ (decidable by M): accept w
 		\item else: reject w
-	\end{itemize}
+	\end{enumerate}
 	\item Therefore, $ L' \in PSPACE $
-\end{itemize}
+\end{enumerate}
 
 \section{P = PSPACE}
-\begin{itemize}
+\begin{enumerate}
 	\item $ L \in PSPACE-complete \implies $
-	\begin{itemize}
-		\item $ L \in PSPACE \land $
-		\item $ \forall K \in PSPACE, K \leq_p L \implies \exists $ 
-		polynomial-time reduction f: L = f(K)
-	\end{itemize}
-	\item $ L \in P \implies \exists $ deterministic polynomial-time decider to 
-	decide L
-	\item we can construct a polynomial-time decider N (input = w) to decide K:
 	\begin{enumerate}
-		\item run M on f(w)
-		\item if M accepts f(w): accept w
+		\item $ L \in PSPACE $
+		\item $ \forall K \in PSPACE, K \leq_m L \implies \exists $ 
+		polynomial-time reduction f: L = f(K)
+	\end{enumerate}
+	\item $ L \in P \implies \exists $ deterministic polynomial-time decider M 
+	to decide L
+	\item $ \forall K \in PSPACE $, construct polynomial-time decider N (input 
+	= w) to decide K:
+	\begin{enumerate}
+		\item if $ f(w) \in L $ (decidable by M): accept w
 		\item else: reject w
 	\end{enumerate}
 	\item $ \implies K \in P \implies PSPACE \subseteq P $
 	\item also $ P \subseteq PSPACE $
 	\item $ \implies P = PSPACE $
-\end{itemize}
+\end{enumerate}
 
 \section{DOM-SET $ \in $ NP-complete}
 
 We can show $ DOM-SET \in NP \land VC \leq_m DOM-SET $
 
 \subsection{DOM-SET $ \in $ NP}
-We can construct non-deterministic polynomial-time algorithm to solve DOM-SET:
-\begin{lstlisting}
-	def algorithm(G, k):
-		guess A
-		for node1 in G.nodes() - A:
-			for node2 in A:
-				if (node2, node1) is not an edge:
-					return false
-		return true
-\end{lstlisting}
+We can construct non-deterministic polynomial-time decider (input = [G, k], 
+where G is a graph and k is a number) to decide DOM-SET:
+\begin{enumerate}
+	\item guess A // $ \mid A \mid < 
+	\mid V \mid $
+	\item if $ \forall v \notin A \exists a \in A ((a, v) \in E) $: accept // 
+	time = $ O(\mid V \mid ^2) $
+\end{enumerate}
 
 \subsection{VC $ \leq_m $ DOM-SET}
 

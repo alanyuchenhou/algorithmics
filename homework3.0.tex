@@ -12,11 +12,8 @@
 \maketitle
 
 \section{A-TM-abba is undecidable}
-Proof by reduction(from A-TM to A-TM-abba) and contradiction(assumption: A-TM-abba is decidable). From the assumption, we can construct decider N(input = [M], where M is a TM) to decide A-TM-abba:
-\begin{enumerate}
-	\item if M accepts abba: accept [M]
-	\item else: reject [M]
-\end{enumerate}
+Proof by reduction(from A-TM to A-TM-abba) and contradiction(assumption: 
+A-TM-abba is decidable).
 We can construct decider O(input = [P, w], where P is a TM and w is a word) to decide A-TM:
 \begin{enumerate}
 	\item construct TM Q(input = x, where x is a word) to accept abba if P 
@@ -25,18 +22,14 @@ We can construct decider O(input = [P, w], where P is a TM and w is a word) to d
 		\item run P on w
 		\item if P accepts w: accept x
 	\end{enumerate}
-	\item run N on [Q]
-	\item if N accepts [Q]: accept [P, w]
+	\item if Q accepts abba (decidable by assumption): accept [P, w]
 	\item else: reject [P, w]
 \end{enumerate}
 This is a contradiction with A-TM is undecidable. Therefore, A-TM-abba is undecidable.
 
 \section{E-jump-LBA is undecidable}
-Proof by reduction(from A-2CM to E-jump-LBA) and contradiction(assumption: E-jump-LBA is decidable). From the assumption, we can construct decider N(input = [M], where M is a jump-LBA) to decide E-jump-LBA:
-\begin{enumerate}
-	\item if L(M) is empty: accept [M]
-	\item else: reject [M]
-\end{enumerate}
+Proof by reduction(from A-2CM to E-jump-LBA) and contradiction(assumption: 
+E-jump-LBA is decidable).
 We can construct decider O(input=[P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct jump-LBA Q(input = [w], where w is a word) to accept accepting computation histories of P:
@@ -47,8 +40,7 @@ We can construct decider O(input=[P], where P is a 2CM) to decide A-2CM:
 		\item assert c[l] is an accepting configuration for P
 		\item accept w
 	\end{enumerate}
-	\item Run N on [Q]
-	\item if N accepts [Q]: reject [P]
+	\item L(Q) is empty (decidable by assumption): reject [P]
 	\item else: accept [P]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore, E-jump-LBA is undecidable.
@@ -73,11 +65,8 @@ As L is decidable, we can construct decider M to decide L. Therefore we can cons
 As decider N decide $ L^r $, $ L^r $ is decidable.
 
 \section{E-read-only-2-TM is undecidable}
-Proof by reduction(from A-2CM to E-read-only-2-TM) and contradiction(assumption that E-read-only-2-TM is decidable). From the assumption, we can construct decider N(input = [M], where M is read-only-2-TM) to decide E-read-only-2-TM:
-\begin{enumerate}
-	\item if L(M) is empty: accept [M]
-	\item else: reject [M]
-\end{enumerate}
+Proof by reduction(from A-2CM to E-read-only-2-TM) and contradiction(assumption 
+that E-read-only-2-TM is decidable).
 We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct read-only-2-TM Q(input = [w], where w is a word) to accept 
@@ -86,8 +75,7 @@ We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 		\item simulate P with its head coordinates simulating the counters
 		\item if the simulation finishes, accept w
 	\end{enumerate}
-	\item run N on [P]
-	\item if N accepts [Q]: reject [P]
+	\item if L(Q) is empty (decidable by assumption): reject [P]
 	\item else: accept [P]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore, E-read-only-2-TM is undecidable.

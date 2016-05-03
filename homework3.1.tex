@@ -12,11 +12,8 @@
 \maketitle
 
 \section{E-2-way+1-counter-FA is undecidable}
-Proof by reduction(from A-2CM to E-2-way+1-counter-FA) and contradiction(assumption: E-2-way+1-counter-FA is decidable). From the assumption, we can construct decider N(input = [M], where M is a 2-way+1-counter-FA) to decide E-2-way+1-counter-FA:
-\begin{enumerate}
-	\item if L(M) is empty: accept [M]
-	\item else: reject [M]
-\end{enumerate}
+Proof by reduction(from A-2CM to E-2-way+1-counter-FA) and contradiction 
+(assumption: E-2-way+1-counter-FA is decidable).
 We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct 2-way+1-counter-FA Q(input = [w], where w is a word) to 
@@ -25,18 +22,14 @@ We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 		\item simulate P with its counter simulating the 1st counter in P and its head position on the tape simulating the 2nd counter in P
 		\item if the simulation finishes: accept w
 	\end{enumerate}
-	\item run N on [Q]
-	\item if N accepts [Q]: reject [P]
+	\item if L(Q) is empty (decidable by assumption): reject [P]
 	\item else: accept [P]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore E-2-way+1-counter-FA is undecidable.
 
 \section{E-2-head-FA is undecidable}
-Proof by reduction(from A-2CM to E-2-head-FA) and contradiction(assumption: E-2-head-FA is decidable). From the assumption, we can construct decider N(input = [M], where M is a 2-head-FA) to decide E-2-head-FA:
-\begin{enumerate}
-	\item if L(M) is empty: accept [M]
-	\item else: reject [M]
-\end{enumerate}
+Proof by reduction(from A-2CM to E-2-head-FA) and contradiction (assumption: 
+E-2-head-FA is decidable).
 We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct 2-head-FA Q(input = [w], where w is a word) to accept accepting computation histories of P:
@@ -47,18 +40,14 @@ We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
 		\item assert c[l] is an accepting configuration
 		\item accept w
 	\end{enumerate}
-	\item run N on [Q]
-	\item if N accepts [Q]: reject [P]
+	\item if L(Q) is empty (decidable by assumption): reject [P]
 	\item else: accept [P]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore E-2-head-FA is undecidable.
 
 \section{E-2-stack-push-pop-PDA is undecidable}
-Proof by reduction(from A-2CM to E-2-stack-push-pop-PDA) and contradiction(assumption: E-2-stack-push-pop-PDA is decidable). From the assumption, we can construct decider N(input = [M], where M is a 2-stack-push-pop-PDA) to decide E-2-stack-push-pop-PDA:
-\begin{enumerate}
-	\item if L(M) is empty: accept [M]
-	\item else: reject [M]
-\end{enumerate}
+Proof by reduction(from A-2CM to E-2-stack-push-pop-PDA) and 
+contradiction(assumption: E-2-stack-push-pop-PDA is decidable).
 We can construct a decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct a 2-stack-push-pop-PDA Q(input = [w], where w is a word) to 
@@ -70,8 +59,7 @@ We can construct a decider O(input = [P], where P is a 2CM) to decide A-2CM:
 		\item assert c[l] is an accepting configuration
 		\item accept w
 	\end{enumerate}
-	\item run N on [Q]
-	\item if N accepts [Q]: reject [P]
+	\item if L(Q) is empty (decidable by assumption): reject [P]
 	\item else: accept [P]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore E-2-stack-push-pop-PDA is undecidable.

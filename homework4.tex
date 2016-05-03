@@ -13,13 +13,7 @@
 
 \section{Termination of Presburger formula is undecidable}
 Proof by reduction (from A-2CM to Termination of Presburger formula) and 
-contradiction (assumption: Termination of Presburger formula is decidable). 
-From the assumption, we can construct decider M (input = [F(x, y, z, x', y', 
-z')], where F is a formula) to decide termination of Presburger formula:
-\begin{enumerate}
-	\item if F terminates: accept [F]
-	\item else: reject [F]
-\end{enumerate}
+contradiction (assumption: Termination of Presburger formula is decidable).
 We can construct decider N (input = [O], where O is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct formula F(q, x, y, q', x', y') to terminate if O halts:
@@ -32,8 +26,7 @@ We can construct decider N (input = [O], where O is a 2CM) to decide A-2CM:
 		q_1, x_1, y_1) \land ... \land F(q_n, x_n, y_n, 1, 1, 1) = true$, where 
 		(0, 0, 0) and (1, 1, 1) are the initial and final configurations
 	\end{enumerate}
-	\item run M on [F]
-	\item if M accepts [F]: accept [O]
+	\item if F terminates (decidable by assumption): accept [O]
 	\item else: reject [O]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore termination of 
@@ -131,7 +124,7 @@ Proof by reduction from stability of PDA to E-PDA. We can construct decider O
 		\item assert w is completely read
 		\item accept w
 	\end{enumerate}
-	\item if L(N) is empty: reject [M]
+	\item if L(N) is empty (E-PDA is decidable): reject [M]
 	\item else: accept [M]
 \end{enumerate}
 Therefore the stability of PDA is decidable.
