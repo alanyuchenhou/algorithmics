@@ -11,14 +11,14 @@
 \author{Yuchen Hou}
 \maketitle
 
-\section{Termination of Presburger formula is undecidable}
-Proof by reduction (from A-2CM to Termination of Presburger formula) and 
-contradiction (assumption: Termination of Presburger formula is decidable).
-From the assumption, there is decider M (input = F, where F is a Presburger 
-formula) to decide Termination of Presburger formula.
-We can construct decider N (input = [O], where O is a 2CM) to decide A-2CM:
+\section{A-Presburger-formula is undecidable}
+Proof by reduction (from A-2CM to A-Presburger-formula) and contradiction 
+(assumption: A-Presburger-formula is decidable).
+From the assumption, there is decider M (input = [F], where F is a Presburger 
+formula) to decide A-Presburger-formula.
+There is decider N (input = [O], where O is a 2CM) to decide A-2CM:
 \begin{enumerate}
-	\item construct formula F(q, x, y, q', x', y') to terminate if O halts:
+	\item there is formula F(q, x, y, q', x', y') to terminate if O halts:
 	\begin{enumerate}
 		\item F(q, x, y, q', x', y') = true $ \iff \delta(q, x, y) = (q', x', 
 		y') $, where $ \delta(q, x, y) $ is the transition function of O, q is 
@@ -31,15 +31,15 @@ We can construct decider N (input = [O], where O is a 2CM) to decide A-2CM:
 	\item if F terminates (decidable by M): accept [O]
 	\item else: reject [O]
 \end{enumerate}
-This is a contradiction with A-2CM is undecidable. Therefore termination of 
-Presburger formula is undecidable.
+This is a contradiction with A-2CM is undecidable. Therefore 
+A-Presburger-formula is undecidable.
 
 \section{LP is decidable}
-Proof by reduction: from LP to satisfiability of Presburger formula.
-There is decider N (input = F, where F is a Presburger formula) to decide 
-satisfiability of Presburger formula.
-We can construct decider M (input = [n, f], where n is a number, 
-f is a linear function) to decide LP:
+Proof by reduction (from LP to SAT-Presburger-formula).
+There is decider N (input = [F], where F is a Presburger formula) to decide 
+SAT-Presburger-formula.
+There is decider M (input = [n, f], where n is a number, f is a linear 
+function) to decide LP:
 \begin{enumerate}
 	\item reduce $ f(x_1...x_n) = y $ to a Presburger formula $ F(x_1...x_n, y) 
 	s.t. $
@@ -51,25 +51,24 @@ f is a linear function) to decide LP:
 		G(K, y): \forall& x_1 ... x_n \in Z(K \ge y \land F(x_1 ... x_n, y)) \\
 		\land \exists& x_1 ... x_n \in Z (K = y \land F(x_1 ... x_n, y))
 	\end{align*}
-	\item if G(K, y) is satisfiable (decidable by N): accept [n, f]
-	\item else: reject [n, f]
+	\item if G(K, y) is satisfiable (decidable by N): accept
+	\item else: reject
 \end{enumerate}
 Therefore LP is decidable.
 
 \section{A Linear formula is a Presburger formula}
 
-\section{Satisfiability of mixed-linear formula is decidable}
+\section{SAT-mixed-linear-formula is decidable}
+Proof by reduction from SAT-mixed-linear-formula to SAT-linear-formula (or 
+SAT-linear-Presburger-formula).
+There is decider N (input = [F], where F is a linear formula) to decide 
+SAT-linear-formula.
+There is decider O (input = [F], where F is a Presburger formula) to decide 
+SAT-Presburger-formula.
+There is decider M (input = [f], where f is a mixed linear formula) to 
+decide SAT-mixed-linear-formula:
 
-Proof by reduction from satisfiability of mixed-linear formula to 
-satisfiability of linear formula (or linear formula and Presburger formula).
-There is decider N (input = F, where F is a linear formula) to decide 
-satisfiability of linear formula.
-There is decider O (input = F, where F is a Presburger formula) to decide 
-satisfiability of Presburger formula.
-
-\subsection{Reduction to linear formula}
-We can construct decider M (input = [f], where f is a mixed linear formula) to 
-decide satisfiability of mixed-linear formula:
+\subsection{Reduction to SAT-linear-formula}
 \begin{enumerate}
 	\item reduce $ f(x_1 ... x_k, y_1 ... y_m) $ to linear formula $ g(x_1 ... 
 	x_k) $:
@@ -83,21 +82,17 @@ decide satisfiability of mixed-linear formula:
 	\item if $ g(x_1 ... x_k) $ is satisfiable (decidable by N): accept [f]
 	\item else: reject [f]
 \end{enumerate}
-Therefore satisfiability of mixed-linear formula is decidable.
 
-\subsection{Reduction to linear formula and Presburger formula}
-We can construct decider M (input = [f], where f is a mixed linear formula) to 
-decide satisfiability of mixed-linear formula:
+\subsection{Reduction to SAT-linear-Presburger-formula}
 \begin{enumerate}
 	\item split every real variable in f into an integral part and a real 
 	part in range(0, 1)
 	\item reduce f to $ g \land h $ where g is a real formula and h is a 
 	Presburger formula
 	\item if g is satisfiable (decidable by N) and f is satisfiable (decidable 
-	by O): accept [f]
-	\item else: reject [f]
+	by O): accept
+	\item else: reject
 \end{enumerate}
-Therefore the satisfiability of mixed-linear formula is decidable.
 
 \section{P is Presburger}
 A k-vector-adder M is a FA, where W is the addition of some constant and a 
@@ -108,17 +103,16 @@ sequence of input symbols.
 	\iff& \exists q, q' ((q, 0) \rightarrow* (q', W'-W))\\
 	\iff& P(0, W' - W)
 \end{align*}
-M accepts Regular language L. We can construct semi-linear language $ K = \{w 
-\mid \#(w) = W'-W\} $. $ J = L \cap K $ is semi-linear and P defines \#(J). 
+L(M) is Reg. $ K = \{w \mid \#(w) = W'-W\} $ is semi-linear. $ J = L \cap K $ 
+is semi-linear and P defines \#(J). 
 Therefore, P is Presburger.
 
 \section{4 tanks make a 2CM}
 
-\section{Stability of PDA is decidable}
-Proof by reduction from stability of PDA to E-PDA.
+\section{STABLE-PDA is decidable}
+Proof by reduction from STABLE-PDA to E-PDA.
 There is decider P (input = [M], where M is a PDA) to decide E-PDA.
-We can construct decider O (input = [M], where M is a PDA) to decide stability 
-of PDA:
+There is decider O (input = [M], where M is a PDA) to decide STABLE-PDA:
 \begin{enumerate}
 	\item define $ \Sigma = \{A(push \ a), B(push \ b), C(pop \ a), D(pop \ 
 	b)\} $

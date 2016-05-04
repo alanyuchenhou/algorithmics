@@ -13,42 +13,44 @@
 
 \section{TM: change}
 
-\subsection{10-change-TM is equivalent to FA}
-The smallest class is Regular, because any 10-change TM is equivalent to a FA. Given any 10-change TM N, we can construct FA M to simulate N:
+\subsection{10-change-TM is FA}
+The smallest class is Reg, because given 10-change TM N, there is FA M (input = 
+w) to simulate N:
 \begin{enumerate}
-	\item guess all 10 changes N will make and generate the input tape with changes
-	\item when N moves left, M moves left
-	\item when N moves right, M moves right
-	\item use M's read to simulate N's write
-	\item use finite control to keep track of 10 changes
+	\item guess all 10 changes N will make and generate the input after changes
+	\item M moves like N except it does not change any symbols
 \end{enumerate}
+Therefore L(M) is Reg.
 
-\subsection{10-change-per-cell TM simulates TM}
-Given TM N, we can construct a 10-change-per-cell TM M to simulate N:
+\subsection{10-change-per-cell TM is TM}
+Given TM N, there is 10-change-per-cell TM M (input = w) to simulate N:
 \begin{enumerate}
-	\item if N writes a symbol: shift the head and symbols in the
-	non-blank region to the blank region on the right
-	\item if N makes any other move: make the same move
+	\item if N writes a symbol: shift the head and symbols in the non-blank 
+	region to the blank region on the right
+	\item else: move like N
 \end{enumerate}
 Notice that M changes a cell at most twice.
 
-\section{1-turn TM}
-The smallest class is Regular, because given 1-turn TM M, we can construct FA N to simulate M:
+\section{1-turn TM is FA}
+The smallest class is Reg, because given 1-turn TM M, there is FA N (input = w) 
+to simulate M:
 \begin{enumerate}
-	\item the input of the FA has 4 tracks
-	\item track 1: the 1st symbol the TM reads during the right move
-	\item track 2: the last symbol the TM reads during the right move
-	\item track 3: the 1st symbol the TM reads during the left move
-	\item track 4: the last symbol the TM reads during the left move
-	\item the FA makes only one rightward move and simulate the backward move of the TM along the way		
+	\item guess all changes M will make and generate the input after changes 
+	with 4 tracks:
+	\begin{enumerate}		
+		\item the 1st symbols M reads during the right move
+		\item the last symbols M reads during the right move
+		\item the 1st symbols M reads during the left move
+		\item the last symbols M reads during the left move
+	\end{enumerate}
+	\item make pass and simulate the backward move of M along the way
 \end{enumerate}
 
-\section{Jump TM}
-
-Given TM N, we can construct a jump TM M to simulate N:
+\section{Jump-TM is TM}
+Given TM N, there is jump-TM M (input = w) to simulate N:
 \begin{enumerate}
 	\item if N moves left: move left(jump left, move right a few times, stop(guess when to stop) and mark), move right to verify the marked cell is right, jump left, move right a few times, stop at mark
-	\item if N makes any other move: make the same move
+	\item else: move like N
 \end{enumerate}
 
 \section{Simulating 2 counters with 1 queue}

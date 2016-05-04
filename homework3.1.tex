@@ -14,55 +14,64 @@
 \section{E-2-way+1-counter-FA is undecidable}
 Proof by reduction(from A-2CM to E-2-way+1-counter-FA) and contradiction 
 (assumption: E-2-way+1-counter-FA is decidable).
-We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
+From the assumption, there is decider M (input = [N], where N is a 
+2-way+1-counter-FA) to decide E-2-way+1-counter-FA.
+There is decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
-	\item construct 2-way+1-counter-FA Q(input = [w], where w is a word) to 
-	accept non-empty language if P halts:
+	\item there is 2-way+1-counter-FA Q (input = [w], where w is a word) to 
+	accept all words if P halts:
 	\begin{enumerate}
 		\item simulate P with its counter simulating the 1st counter in P and its head position on the tape simulating the 2nd counter in P
-		\item if the simulation finishes: accept w
+		\item if the simulation finishes: accept
 	\end{enumerate}
-	\item if L(Q) is empty (decidable by assumption): reject [P]
-	\item else: accept [P]
+	\item if L(Q) is empty (decidable by M): reject
+	\item else: accept
 \end{enumerate}
-This is a contradiction with A-2CM is undecidable. Therefore E-2-way+1-counter-FA is undecidable.
+This is a contradiction with A-2CM is undecidable.
+Therefore E-2-way+1-counter-FA is undecidable.
 
 \section{E-2-head-FA is undecidable}
 Proof by reduction(from A-2CM to E-2-head-FA) and contradiction (assumption: 
 E-2-head-FA is decidable).
-We can construct decider O(input = [P], where P is a 2CM) to decide A-2CM:
+From the assumption, there is decider M (input = [N], where N is a 2-head-FA) 
+to decide E-2-head-FA.
+There is decider O(input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
-	\item construct 2-head-FA Q(input = [w], where w is a word) to accept accepting computation histories of P:
+	\item there is 2-head-FA Q(input = w) to accept halting	histories of P:
 	\begin{enumerate}
 		\item assert w has valid computation history format: [c[1], c[2], ..., c[l]], where c[i] = [instruction, state, counter1, counter2]
 		\item assert c[1] is the initial configuration for P
 		\item assert all configuration transitions are valid (2 heads check adjacent configurations: read instruction, check state and counter updates)
 		\item assert c[l] is an accepting configuration
-		\item accept w
+		\item accept
 	\end{enumerate}
-	\item if L(Q) is empty (decidable by assumption): reject [P]
-	\item else: accept [P]
+	\item if L(Q) is empty (decidable by M): reject
+	\item else: accept
 \end{enumerate}
-This is a contradiction with A-2CM is undecidable. Therefore E-2-head-FA is undecidable.
+This is a contradiction with A-2CM is undecidable.
+Therefore E-2-head-FA is undecidable.
 
 \section{E-2-stack-push-pop-PDA is undecidable}
 Proof by reduction(from A-2CM to E-2-stack-push-pop-PDA) and 
 contradiction(assumption: E-2-stack-push-pop-PDA is decidable).
-We can construct a decider O(input = [P], where P is a 2CM) to decide A-2CM:
+From the assumption, there is decider M (input = [N], where N is a 
+2-stack-push-pop-PDA) to decide E-2-stack-push-pop-PDA.
+There is decider O (input = [P], where P is a 2CM) to decide A-2CM:
 \begin{enumerate}
-	\item construct a 2-stack-push-pop-PDA Q(input = [w], where w is a word) to 
-	accept accepting computation histories of P:
+	\item there is 2-stack-push-pop-PDA Q (input = w) to accept halting 
+	histories of P:
 	\begin{enumerate}
 		\item read every symbol in w, push it on both stacks, and assert w is the reverse of a valid computation history format: [c[1], c[2], ..., c[l]], where c[i] = [instruction, state, counter1, counter2]
 		\item assert c[1] is the initial configuration for P (1 stack pops c[1])
 		\item assert all configuration transitions are valid (2 stacks pop and check adjacent configurations: read instruction, check state and counter updates)
 		\item assert c[l] is an accepting configuration
-		\item accept w
+		\item accept
 	\end{enumerate}
-	\item if L(Q) is empty (decidable by assumption): reject [P]
-	\item else: accept [P]
+	\item if L(Q) is empty (decidable by M): reject
+	\item else: accept
 \end{enumerate}
-This is a contradiction with A-2CM is undecidable. Therefore E-2-stack-push-pop-PDA is undecidable.
+This is a contradiction with A-2CM is undecidable.
+Therefore E-2-stack-push-pop-PDA is undecidable.
 
 \section{E-2-counter-increment-decrement-FA is decidable}
 make 2 cuts on the counters evolution at their peaks, to cut it into 3 monotonic regions. check the 4 values at the 2 cuts and analyze the evolution between the 2 peaks with linear equations.

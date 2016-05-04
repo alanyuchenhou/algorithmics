@@ -11,96 +11,87 @@
 \author{Yuchen Hou}
 \maketitle
 
-\section{closure property: shuffle}
+\section{closure: shuffle}
 
-\subsection{}
+\subsection{Reg shuffle Reg is Reg}
 
 \begin{align*}
 	L_1 \in Reg \implies \exists FA \ M_1 \ accepting \ L_1\\
-	L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2\\
+	L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2
 \end{align*}
-We can construct a FA $ M_3 $ accepting $ L_1 \mid \mid  L_2 $ as follows:
+There is FA $ M_3 $ (input = w) to accept $ L_1 \mid \mid  L_2 $:
 \begin{enumerate}
-	\item run $ M_1, M_2 $ in parallel;
-	\item read input w; for every symbol $\gamma $ in w, guess whether $\gamma$ is a symbol in $ w_1 $ or $ w_2 $;
+	\item run $ M_1, M_2 $ in parallel
+	\item for each symbol $\gamma $ in w:
 	\begin{enumerate}
-		\item if $ \gamma \ in \ w_1 $, feed $ \gamma $ to $ M_1 $;
-		\item otherwise, feed $ \gamma $ to $ M_2 $;
+		\item if $ \gamma $ in $ \ w_1 $ (guess): feed $ \gamma $ to $ M_1 $
+		\item else: feed $ \gamma $ to $ M_2 $
 	\end{enumerate}
-	\item after reading w, check $ M_1 $ and $ M_2 $;
-	\begin{enumerate}
-		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
-		\item otherwise, reject w;	
-	\end{enumerate}
+	\item if $ M_1 $ accepts and $ M_2 $ accepts: accept
+	\item else: reject	
 \end{enumerate}
-FA $ M_3 $ accepts $L_1 \mid \mid  L_2 \implies L_1 \mid \mid  L_2 \in Reg$.
+$ \implies L_1 \mid \mid  L_2 \in Reg$.
 
-\subsection{}
+\subsection{Reg shuffle CFL is CFL}
 
 \begin{align*}
 L_1 \in Reg \implies \exists FA \ M_1 \ accepting \ L_1\\
-L_2 \in CFL \implies \exists PDA \ M_2 \ accepting \ L_2\\
+L_2 \in CFL \implies \exists PDA \ M_2 \ accepting \ L_2
 \end{align*}
-We can construct a PDA $ M_3 $ accepting $ L_1 \mid \mid  L_2 $ as follows:
+There is PDA $ M_3 $ (input = w) to accept $ L_1 \mid \mid  L_2 $:
 \begin{enumerate}
-	\item run $ M_1, M_2 $ in parallel;
-	\item read input w; for every symbol $\gamma $ in w, guess whether $\gamma$ is a symbol in $ w_1 $ or $ w_2 $;
+	\item run $ M_1, M_2 $ in parallel
+	\item for each symbol $\gamma $ in w:
 	\begin{enumerate}
-		\item if $ \gamma \ in \ w_1 $, feed $ \gamma $ to $ M_1 $;
-		\item otherwise, feed $ \gamma $ to $ M_2 $;
+		\item if $ \gamma $ in $ \ w_1 $ (guess): feed $ \gamma $ to $ M_1 $
+		\item else: feed $ \gamma $ to $ M_2 $
 	\end{enumerate}
-	\item after reading w, check $ M_1 $ and $ M_2 $;
-	\begin{enumerate}
-		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
-		\item otherwise, reject w;	
-	\end{enumerate}
+	\item if $ M_1 $ accepts and $ M_2 $ accepts: accept
+	\item else: reject	
 \end{enumerate}
-PDA $ M_3 $ accepts $L_1 \mid \mid  L_2 \implies L_1 \mid \mid  L_2 \in CFL$.
+$\implies L_1 \mid \mid  L_2 \in CFL$.
 
-\section{closure property: function}
+\section{closure: function}
 
-\subsection{}
-
-$ L \in Reg \implies \exists FA \ M \ accepting \ L $, we can construct a FA M' accepting h(L) as follows:
+\subsection{f(Reg) is Reg}
+$ L \in Reg \implies \exists FA \ M \ accepting \ L $.
+There is FA M' (input = h(w)) to accept h(L):
 \begin{enumerate}
-	\item run M;
-	\item read input h(w); for every symbol h(a) in h(w), guess the value of a and feed a to M
-	\item after reading h(w), check M
-	\begin{enumerate}
-		\item if M is in accepting state, accept h(w);
-		\item otherwise, reject h(w);
-	\end{enumerate}
+	\item run M
+	\item for each symbol h(a) in h(w): feed a (guess) to M
+	\item if M accepts, accept
+	\item else: reject
 \end{enumerate}
-FA M' accepts h(L) $ \implies h(L) \ \in \ Reg $.
+$ \implies h(L) \ \in \ Reg $.
 
-\subsection{}
-
+\subsection{f(CFL) can be Reg}
 Assume $ \Sigma = \{0, 1\} $ without loss of generality.\\
-$ \exists L = \{0^n1^n: n>1\} \notin Reg $, and function $ h(a) = 0 \forall a \in \Sigma $ such that $ h(L) = \{0^{2n}: n>1\} \in Reg $.
+$ L = \{0^n1^n: n>1\} \notin Reg $, and function $ h(a) = 0 $
+satisfy $ h(L) = \{0^{2n}: n>1\} \in Reg $.
 
-\section{closure property: match}
+\section{Reg match Reg is Reg}
 
 \begin{align*}
 L_1 \in Reg \implies \exists FA \ M_1 \ accepting \ L_1\\
-L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2\\
+L_2 \in Reg \implies \exists FA \ M_2 \ accepting \ L_2
 \end{align*}
-We can construct a FA $ M_3 $ accepting $ L_1 \heartsuit L_2 $ as follows:
+There is FA $ M_3 $ (input = w) to accept $ L_1 \heartsuit L_2 $:
 \begin{enumerate}
-	\item run $ M_1, M_2 $ in parallel;
-	\item guess every symbol $ \gamma \ in \ w_1' $, feed $ \gamma $ to $ M_1 $
-	\item read every symbol $ \gamma \ in \ w $, feed $ \gamma $ to $ M_1 \ and \ M_2 $;
-	\item guess every symbol $ \gamma \ in \ w_2' $, feed $ \gamma $ to $ M_2 $
-	\item check $ M_1 $ and $ M_2 $;
-	\begin{enumerate}
-		\item if both $ M_1  $ and $ M_2 $ are in accepting state, accept w;
-		\item otherwise, reject w;	
-	\end{enumerate}
+	\item run $ M_1, M_2 $ in parallel
+	\item for each symbol $ \gamma $ in $ w_1' $ (guess): feed $ \gamma $ to $ 
+	M_1 $
+	\item for each symbol $ \gamma $ in $ w $: feed $ \gamma $ to $ M_1 \ and \ 
+	M_2 $
+	\item for each symbol $ \gamma $ in $ w_2' $ (guess): feed $ \gamma $ to $ 
+	M_2 $
+	\item if $ M_1 $ accepts and $ M_2 $ accepts: accept
+	\item else: reject
 \end{enumerate}
-FA $ M_3 $ accepts $ L_1 \heartsuit L_2 \implies L_1 \heartsuit L_2 \in Reg$.
+$ \implies L_1 \heartsuit L_2 \in Reg$.
 
-\section{B-bounded PDA}
-
-A B-bounded PDA is in fact a FA. $ L = \{0^n1^n: n \geq 1\} \notin Reg \implies$ L cannot be accepted by any FA $ \implies $ L cannot be accepted by any B-bounded PDA.
+\section{B-bounded PDA is FA}
+A B-bounded PDA is in fact a FA and accepts Reg. $ L = \{0^n1^n: n \geq 1\} 
+\notin Reg \implies$ there is no B-bounded PDA (FA) to accept L.
 
 \section{Liveness problem for PDA}
 
