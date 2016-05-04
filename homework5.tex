@@ -68,7 +68,8 @@ where G is a graph and k is a number) to decide DOM-SET:
 	\item guess A // $ \mid A \mid < 
 	\mid V \mid $
 	\item if $ \forall v \notin A \exists a \in A ((a, v) \in E) $: accept // 
-	time = $ O(\mid V \mid ^2) $
+	deterministic polynomial-time = $ O(\mid V \mid ^2) $
+	\item else: reject
 \end{enumerate}
 
 \subsection{VC $ \leq_m $ DOM-SET}

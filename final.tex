@@ -7,198 +7,186 @@
 \usepackage{cite}
 \begin{document}
 \lstset{language=python, tabsize=4}
-\title{CS 516 semilinear}
+\title{CS 516 final}
 \author{Yuchen Hou}
 \maketitle
+
+\section{decidability}
+
+\subsection{A-TT is undecidable}
+A TT is a machine with one variable x and instruction set:
+\begin{enumerate}
+	\item x := 2x
+	\item x := 3x
+	\item x := x/2
+	\item x := x/3
+	\item x mod 2 = 0
+	\item x mod 3 = 0
+\end{enumerate}
+
+\subsubsection{problem}
+\begin{enumerate}
+	\item given: TT T
+	\item question: does T halt?
+\end{enumerate}
+
+\subsubsection{proof}
+Proof by reduction (from A-2CM to A-TT) and contradiction (assumption: A-TT is 
+decidable).
+From the assumption, there is decider M (input = [N], where N is a TT) to 
+decide A-TT.
+We can construct decider O (input = [P], where P is a 2CM) to decide A-2CM:
+\begin{enumerate}
+	\item construct a TT Q to halt if P halts:
+	\begin{enumerate}
+		\item simulate P x++ with x := 2x
+		\item simulate P y++ with x := 3x
+		\item ...
+	\end{enumerate}
+	\item if Q halts (decidable by M): accept
+	\item else: reject
+\end{enumerate}
+This is a contradiction with A-2CM is undecidable. Therefore A-TT is 
+undecidable.
+
+\subsection{L is semi-linear}
+\begin{enumerate}
+	\item L is Reg
+	\item L is CFL
+	\item L = $ semi-linear \cap Reg $
+	\item P is Presburger formula and P defines \#(L)
+\end{enumerate}
+
+\subsection{E-good-paths is decidable}
+Each edge has a color.
+A walk is the sequence of edge colors.
+\subsubsection{problem: E-good-paths}
+\begin{enumerate}
+	\item given: directed graph G(V, E), v1, v2 in V
+	\item question: is there a path(v1, v2) w with constraint: $ \#red(w) = 
+	\#orange(w) = \#yellow(w) $
+\end{enumerate}
+
+\subsubsection{proof}
+Proof by reduction (from E-good-paths to E-semi-linear).
+There is a decider N (input = [L], where L is Semi-linear) to decide 
+E-semi-linear.
+We can construct decider M (input = [G, v1, v2], where G is a graph, v1, v2 are 
+nodes in the graph) to decide E-good-graph:
+\begin{enumerate}
+	\item $ L_1 = \{w: w \in paths(v1, v2)\} \in Reg $
+	\item $ L_2 = \{w: \#red(w) = \#orange(w) = \#yellow(w) \} \in Semi-linear $
+	\item L = $ L1 \cap L2 \in Semi-linear $
+	\item if $ L = \emptyset $ (decidable by N): reject
+	\item else: accept
+\end{enumerate}
+Therefore E-good-paths is decidable.
+
+\subsection{E-good-instruction-sequences is decidable}
+there is a water pump, pumping water from river 1 and river 2 to a pool.
+Pump instruction set (instruction[i] = [river[1], river[2]]; river = [min, 
+max]):
+\begin{enumerate}
+	\item red = [3,4], [2, 10]
+	\item blue = [2, 11], [0,1]
+	\item ...
+	\item purple = stop	
+\end{enumerate}
+
+\subsubsection{problem: E-good-instruction-sequences}
+\begin{enumerate}
+	\item given an instruction set
+	\item question: is there a instruction sequence w satisfying constraint 
+	river1 > 2 river2
+\end{enumerate}
+
+\subsubsection{proof}
+Proof by reduction (from E-good-instruction-sequences to 
+satisfiability-mixed-linear-formula).
+There is decider M (input = [L], where L is a mixed-linear language) to decide 
+E-mixed-linear.
+Construct decider N (input = [instruction set]) to decide 
+E-good-instruction-sequences:
+\begin{enumerate}
+	\item construct the language of acceptable sequences:
+	\begin{align*}
+	L = \{w: & river1 > 3\#red(w) + 2\#blue(w) + ... \\
+	& river1 < 4\#red(w) + 11\#blue(w) + ... \\
+	& river2 > 2\#red(w) + 0\#blue(w) + ... \\
+	& river2 < 10\#red(w) + 1\#blue(w) + ... \\
+	& river1 > 2river2\} \in mixed-linear
+	\end{align*}
+	\item if $ L = \emptyset $ (decidable by M): reject
+	\item else: accept
+\end{enumerate}
+Therefore E-good-instruction-sequences is decidable.
 
 \section{P VS NP}
 \subsection{definitions}
 P, NP, NP-complete, reduction, PSPACE, co-NP
 
+\subsection{example: equal-boolean is in P with false assumption}
+false assumption: SAT is in P
+
+\subsubsection{problem: equal-boolean}
+\begin{enumerate}
+	\item given: boolean formula A, B
+	\item question: $ \forall X A(X) = B(X) $?
+\end{enumerate}
+
+\subsubsection{proof: algorithm design}
+Proof by reduction (from equal-boolean to SAT).
+$ \exists $ deterministic polynomial-time decider M (input = [A], where A is a 
+boolean formula) to decide SAT. We can construct polynomial-time decider N 
+(input = [A, B], where A and B are boolean formulas) to decide boolean equality:
+\begin{enumerate}
+	\item reduce [A, B] to C: $ A \oplus B $
+	\item if C is satisfiable (decidable by M): reject
+	\item else: accept
+\end{enumerate}
+Therefore equal-boolean is in P.
+
+\subsection{example: HC1 is in NP}
+
+\subsubsection{problem: HC1}
+\begin{enumerate}
+	\item given: direct graph G
+	\item question: is there a walk w on G, s.t. w passes every node in G
+\end{enumerate}
+
+\subsubsection{proof: algorithm design}
+construct deterministic polynomial-time decider (input = [G], where G is a 
+directed graph) to decide HC1:
+\begin{enumerate}
+	\item DAG = SCC(G)
+	\item if nodes in DAG are connected in one sequence: accept
+	\item else: reject
+\end{enumerate}
+Therefore HC1 is in P and of course in NP.
+
 \subsection{example: factorization is in NP}
 
-\subsubsection{problem}
-given: number n
-question: are there p, q in prime, s.t. n = pq
+\subsubsection{problem: factorization}
+\begin{enumerate}
+	\item given: number n
+	\item question: are there p, q s.t. p, q are primes and pq = n?
+\end{enumerate}
 
 \subsubsection{proof: algorithm design}
-
-\begin{lstlisting}
-	def algorithm(n):
-		guess p, q // |q| < |n|, |q| < |n|
-		if n = pq and q is prime and q is prime: // deterministic polynomial time
-			return yes
-		else:
-			return no
-\end{lstlisting}
+construct non-deterministic polynomial-time decider (input = [n], where n is a 
+number) to decide factorization:
+\begin{enumerate}
+	\item guess p, q // $ |q| < |n|, |q| < |n| $
+	\item if n = pq and p, q are primes: accept // deterministic polynomial-time
+	\item else: reject
+\end{enumerate}
+Therefore factorization is in NP.
 
 \subsection{X is in NP-complete}
-
-\subsubsection{proof}
-\begin{lstlisting}
-	show X is in NP
-	find Y in NP-complete
-	reduce Y to X
-\end{lstlisting}
-
-\subsection{example: HC1 is NP}
-
-\subsubsection{problem}
-given: direct graph G
-question: is there a walk w on G, s.t. w passes every node in G
-
-\subsubsection{proof: algorithm design}
-prove HC1 is in P by providing a algorithm
-\begin{lstlisting}
-	def algorithm(G):
-		DAG = SCC(G)
-		assert(DAG is connected in one sequence)
-\end{lstlisting}
-
-\subsection{example}
-suppose SAT in P, design polynomial algorithm to solve:
-
-\subsubsection{problem}
-given boolean formula A,B
-question: A = B?
-
-\subsubsection{solution: algorithm design}
-\begin{itemize}
-	\item there is polynomial time algorithm A to solve SAT
-	\item assert (A xor B) is not satisfiable
-\end{itemize}
-
-\section{emptiness proof}
-
-\subsection{emptiness is decidable}
-map the problem to a language = all words intersect with constraints
-show the language is semi-linear (L is reg or L is CF)
-
-\subsubsection{E-2FA(2 head) is undecidable}
-Reduction: from A-2CM to E-2FA. Let M be a 2CM and x, y its counters. A execution history is a sequence of configurations. A accepting execution starts with initial state, with valid transitions and ends with final state.
-
-\subsubsection{A-T machine is undecidable}
-T is a machine with one variable X. X has instruction set:
-x := 2x;
-x := 3x;
-x := x/2;
-x := x/3;
-2|x;
-3|x;
-
-use T to simulate any 2CM M(x, y):
-2CM => T machine
-x++ => x := 2x;
-y++ => x := 3x;
-...
-
-\section{R and RE}
-
-\subsection{L}
-L is in R, L1 is in Reg. Show L' = {x: there is y in L, s.t. |x| = |y|, xy is in R} is recursive
-
-\section{water pump}
-there is a water pump, pumping water from river 1 and river 2 to a pool. pump is a FA with input symbols as events. Event encoding:
-red => [3,4], [2, 10] // pump water in (3, 4) from river 1 and water in (2, 10) from river 2
-blue => [2, 11], [0,0]
-...
-purple => stop
-
-the pool is unlimited
-question: is there a chance that the total water pumped from river 1 > 2 water pumped from river 2
-
-
-\section{halting is decidable}
-
-\section{E-L is decidable}
 \begin{enumerate}
-	\item show L is semi-linear
-	\item E-L is decidable
+	\item $ X \in NP $
+	\item $ Y \in NP-complete \land Y \leq_m X $
 \end{enumerate}
-
-\section{F(x1, x2 ... xk) is Presburger}
-\begin{enumerate}
-	\item x1...xk don't move, then directly write F into a Presburger formular. e.g. homework 2
-	\item construct L such that L is semiliear and \#(L) is definable by F. e.g. homework 5
-\end{enumerate}
-
-\section{L is semi-linear}
-\begin{itemize}
-	\item show L is regular
-	\item show L is CFL
-	\item show L = semi-linear intersect regular intersect semi-linear-commutative
-\end{itemize}
-
-\section{graph example}
-
-\subsection{problem}
-\begin{itemize}
-	\item given: directed graph G, each edge has a color; 2 nodes v1, v2 in G
-	\item on a walk from v1 to v2, we count the edges of different colors
-	\item G is good if there is walk that meets condition: red count = orange count = yellow count
-	\item question is G good?
-\end{itemize}
-
-\subsection{problem is decidable}
-\begin{itemize}
-	\item L = \{walk: walk meets condition\}
-	\item L = L1 intersect L2
-	\item L1 = \{all walks from v1 to v2\} is regular
-	\item L2 = \{words: red count = orange count = yellow count\} is semi-linear
-\end{itemize}
-
-\section{PDA example}
-
-\subsection{problem}
-money = 0
-\begin{itemize}
-	\item M is PDA, run M on input w, see pushes and pops on the stack
-	\item push a: money += 5
-	\item pop b: money -= 10
-	\item M is good if there is w meeting condition: money > 0
-	\item question: is M good?
-\end{itemize}
-
-\subsection{problem is decidable}
-\begin{itemize}
-	\item L = \{run: run meets condition\}
-	\item run is the sequence of push-a(A) and pop-b(B)
-	\item L = L1 intersect L2
-	\item L2 = \{word: 5 A count - 10 B count > 0\} is semi-linear and commutative
-	\item L1 = all possible sequence
-	\item construct PDA N to accept L1:
-	\begin{enumerate}
-		\item run M on w (guess)
-		\item the run generates sequence, check the guess is correct
-		\item if M accepts w and the entire sequence is checked, N accept sequence
-	\end{enumerate}
-\end{itemize}
-
-\section{A is in P}
-B in P, so we have a deterministic algorithm algB to solve B.
-A reduces to B, we have function f
-1. f runs polynomial time
-2. for all x, x in A iff f(x) in B
-
-we can construct deterministic polynomial time algorithm algA (input = x) to solve A:
-return algB(f(x))
-
-algA runs in polynomial time.
-
-\section{in NP complete?}
-cracking RSA: unknown
-graph isomorphism: unknown
-
-\section{3SAT is NP complete}
-translate: x1 or x2 or x3 bar or x4 bar or x5 or x6 bar to (x1 or x2 or y1) and 
-(y1 bar or x3 bar or y2) and (y2 bar or x4 bar or y3) and (y3 bar or x5 or x6 
-bar)
-
-\section{IDSET is NP complete}
-translate (x1 or x2 or x3 bar) and (x1 or x2 bar or x3) and (x1 or x2 bar or 
-x3) and (x1 or x2 or x3) to graph of triangles
-
-\section{VC is NP complete}
-C is VC of G iff V-C is an IDSET of G
+Therefore X is in NP-complete.
 
 \end{document}

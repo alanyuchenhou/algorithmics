@@ -14,6 +14,8 @@
 \section{Termination of Presburger formula is undecidable}
 Proof by reduction (from A-2CM to Termination of Presburger formula) and 
 contradiction (assumption: Termination of Presburger formula is decidable).
+From the assumption, there is decider M (input = F, where F is a Presburger 
+formula) to decide Termination of Presburger formula.
 We can construct decider N (input = [O], where O is a 2CM) to decide A-2CM:
 \begin{enumerate}
 	\item construct formula F(q, x, y, q', x', y') to terminate if O halts:
@@ -26,7 +28,7 @@ We can construct decider N (input = [O], where O is a 2CM) to decide A-2CM:
 		q_1, x_1, y_1) \land ... \land F(q_n, x_n, y_n, 1, 1, 1) = true$, where 
 		(0, 0, 0) and (1, 1, 1) are the initial and final configurations
 	\end{enumerate}
-	\item if F terminates (decidable by assumption): accept [O]
+	\item if F terminates (decidable by M): accept [O]
 	\item else: reject [O]
 \end{enumerate}
 This is a contradiction with A-2CM is undecidable. Therefore termination of 
@@ -34,6 +36,8 @@ Presburger formula is undecidable.
 
 \section{LP is decidable}
 Proof by reduction: from LP to satisfiability of Presburger formula.
+There is decider N (input = F, where F is a Presburger formula) to decide 
+satisfiability of Presburger formula.
 We can construct decider M (input = [n, f], where n is a number, 
 f is a linear function) to decide LP:
 \begin{enumerate}
@@ -47,7 +51,7 @@ f is a linear function) to decide LP:
 		G(K, y): \forall& x_1 ... x_n \in Z(K \ge y \land F(x_1 ... x_n, y)) \\
 		\land \exists& x_1 ... x_n \in Z (K = y \land F(x_1 ... x_n, y))
 	\end{align*}
-	\item if G(K, y) is satisfiable: accept [n, f]
+	\item if G(K, y) is satisfiable (decidable by N): accept [n, f]
 	\item else: reject [n, f]
 \end{enumerate}
 Therefore LP is decidable.
@@ -58,6 +62,10 @@ Therefore LP is decidable.
 
 Proof by reduction from satisfiability of mixed-linear formula to 
 satisfiability of linear formula (or linear formula and Presburger formula).
+There is decider N (input = F, where F is a linear formula) to decide 
+satisfiability of linear formula.
+There is decider O (input = F, where F is a Presburger formula) to decide 
+satisfiability of Presburger formula.
 
 \subsection{Reduction to linear formula}
 We can construct decider M (input = [f], where f is a mixed linear formula) to 
@@ -72,7 +80,7 @@ decide satisfiability of mixed-linear formula:
 		\lor& f(x_1 ... x_k, 1 ... 0) \\
 		\lor& f(x_1 ... x_k, 1 ... 1)
 	\end{align*}
-	\item if $ g(x_1 ... x_k) $ is satisfiable: accept [f]
+	\item if $ g(x_1 ... x_k) $ is satisfiable (decidable by N): accept [f]
 	\item else: reject [f]
 \end{enumerate}
 Therefore satisfiability of mixed-linear formula is decidable.
@@ -85,7 +93,8 @@ decide satisfiability of mixed-linear formula:
 	part in range(0, 1)
 	\item reduce f to $ g \land h $ where g is a real formula and h is a 
 	Presburger formula
-	\item if g is satisfiable and f is satisfiable: accept [f]
+	\item if g is satisfiable (decidable by N) and f is satisfiable (decidable 
+	by O): accept [f]
 	\item else: reject [f]
 \end{enumerate}
 Therefore the satisfiability of mixed-linear formula is decidable.
@@ -100,22 +109,21 @@ sequence of input symbols.
 	\iff& P(0, W' - W)
 \end{align*}
 M accepts Regular language L. We can construct semi-linear language $ K = \{w 
-\mid \#(w) = W'-W\} $. P defines semi-linear language $ J = L \cap K $. 
+\mid \#(w) = W'-W\} $. $ J = L \cap K $ is semi-linear and P defines \#(J). 
 Therefore, P is Presburger.
 
 \section{4 tanks make a 2CM}
 
 \section{Stability of PDA is decidable}
-Proof by reduction from stability of PDA to E-PDA. We can construct decider O 
-(input = [M], where M is a PDA) to decide stability of PDA:
+Proof by reduction from stability of PDA to E-PDA.
+There is decider P (input = [M], where M is a PDA) to decide E-PDA.
+We can construct decider O (input = [M], where M is a PDA) to decide stability 
+of PDA:
 \begin{enumerate}
 	\item define $ \Sigma = \{A(push \ a), B(push \ b), C(pop \ a), D(pop \ 
 	b)\} $
-	\item construct semi-linear language L:
-	\begin{align*}
-		L = \{w | & -2\#_Aw + 3\#_Bw \ge 0 \\
-		\land & 3(-2\#_Aw + 3\#_Bw) \ge \#_Aw-\#_Cw + \#_Bw-\#_Dw\}
-	\end{align*}
+	\item $ L = \{w |  -2\#_Aw + 3\#_Bw \ge 0
+	\land  3(-2\#_Aw + 3\#_Bw) \ge \#_Aw-\#_Cw + \#_Bw-\#_Dw\} \in semi-linear$
 	\item construct PDA N (input = w) to accept Semi-linear language L:
 	\begin{enumerate}
 		\item run M, for each action $ \gamma_1 \in \Sigma $: read $ \gamma_2 $ 
@@ -124,7 +132,7 @@ Proof by reduction from stability of PDA to E-PDA. We can construct decider O
 		\item assert w is completely read
 		\item accept w
 	\end{enumerate}
-	\item if L(N) is empty (E-PDA is decidable): reject [M]
+	\item if L(N) is empty (decidable by P): reject [M]
 	\item else: accept [M]
 \end{enumerate}
 Therefore the stability of PDA is decidable.
